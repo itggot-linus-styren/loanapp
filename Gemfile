@@ -6,8 +6,15 @@ gem 'sinatra-flash'
 gem 'activerecord'
 gem 'sinatra-activerecord'
 gem 'sinatra-contrib'
-gem 'rails-erd', require: false, group: :development
 gem 'bcrypt'
-gem 'sqlite3'
 gem 'rake'
-gem('rerun', github: 'alexch/rerun')
+
+group :development, :test do
+    gem 'sqlite3'
+    gem('rerun', github: 'alexch/rerun')
+    gem 'sqlite3'
+    gem 'rails-erd', require: false
+end
+group :production do
+    gem 'pg'
+end
