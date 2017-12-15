@@ -2,6 +2,8 @@ require 'bundler'
 
 Bundler.require
 
+set :environment, :production
+
 # load app and models
 dirs = ["models", "sinatra", "managers", "handlers"]
 dirs.each do |dir|

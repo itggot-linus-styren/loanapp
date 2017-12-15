@@ -10,7 +10,6 @@ gem 'bcrypt'
 gem 'rake'
 
 group :development, :test do
-    gem 'sqlite3'
     gem('rerun', github: 'alexch/rerun')
     gem 'sqlite3'
     gem 'rails-erd', require: false

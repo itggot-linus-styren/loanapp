@@ -22,9 +22,11 @@ GEM
     arel (8.0.0)
     backports (3.10.3)
     bcrypt (3.1.11)
+    bcrypt (3.1.11-x64-mingw32)
     choice (0.2.0)
     concurrent-ruby (1.0.5)
     ffi (1.9.18)
+    ffi (1.9.18-x64-mingw32)
     i18n (0.9.1)
       concurrent-ruby (~> 1.0)
     listen (3.1.5)
@@ -34,6 +36,8 @@ GEM
     minitest (5.10.3)
     multi_json (1.12.2)
     mustermann (1.0.1)
+    pg (0.21.0)
+    pg (0.21.0-x64-mingw32)
     rack (2.0.3)
     rack-protection (2.0.0)
       rack
@@ -69,6 +73,7 @@ GEM
       temple (>= 0.7.6, < 0.9)
       tilt (>= 1.3.3, < 2.1)
     sqlite3 (1.3.13)
+    sqlite3 (1.3.13-x64-mingw32)
     temple (0.8.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
@@ -77,10 +82,12 @@ GEM
 
 PLATFORMS
   ruby
+  x64-mingw32
 
 DEPENDENCIES
   activerecord
   bcrypt
+  pg
   rails-erd
   rake
   rerun!
@@ -92,4 +99,4 @@ DEPENDENCIES
   sqlite3
 
 BUNDLED WITH
-   1.15.3
+   1.15.4
