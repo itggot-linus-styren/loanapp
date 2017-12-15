@@ -1,0 +1,16 @@
+- @header = "Register"
+- if @invitation
+    h2 Register as #{@invitation.user_type}
+    p Invitation sent by #{@invitation.invited_by.username}
+- else
+    h2 Register development	
+div class="whitebg"
+form action="/postregister" method="post"
+  responsible-input @update-responsible="updateResponsible" :responsiblePerson="responsible" name="register[username]" labelText="Username"
+  div
+    input#password name="register[password]" type="password" placeholder="Password"
+    /label for="password" Password
+  div
+    input#confirm_password name="register[confirm_password]" type="password" placeholder="Confirm password"
+    /label for="confirm_password" Confirm password
+  input type="submit" value="Register"

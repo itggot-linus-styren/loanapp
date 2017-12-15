@@ -1,0 +1,6 @@
+div class="banner"
+    h2 Invitation created successfully
+    p Note, the invitation will expire in 24 hours or when claimed.
+div class="invited"
+    p Send this link to the person you want to invite:
+    copiable-input @alert-notify="doAlertNotify" @alert-error="doAlertError" content="#{request.base_url + @invitation_url}"

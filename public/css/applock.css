@@ -1,0 +1,163 @@
+.body {
+    margin: 0;
+    padding: 0;
+}
+
+.applock {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.applock > header {
+    position: fixed;
+    top: 10%;
+    background: none;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.applock::before {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: -1;
+
+    display: block;
+    background-image: url('/img/applock_background.jpg');
+    width: 100%;
+    height: 100%;
+
+    filter: brightness(150%) blur(30px);
+}
+
+.applock > header > h1 {
+    position: relative;
+    font-weight: 300;
+    font-size: 3rem;
+    color: black;
+}
+
+.applock > header > h1::before {
+    position: absolute;
+    top: calc(50% - 5px);
+    left: 0;
+    content: '';
+    background-color:#D62626;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+}
+
+.applock > header > h1::after {
+    position: absolute;
+    top: calc(50% - 5px);
+    left: calc(100% + 5px);
+    content: '';
+    background-color:#D62626;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+}
+  
+.applock > main {
+    background: none;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0;
+}
+
+.applock main form {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.applock main form > div {
+    margin: 0;
+    padding-bottom: 1rem;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-content: center;    
+    flex-direction: column;
+}
+
+.applock main input[type=password] {
+    width: 100%;
+    padding:5px; 
+    border-radius: calc(3rem / 2);
+    border: 0 none;
+    height: 3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: rgba(0, 0, 0, 0.25);
+    text-transform: uppercase;
+    color: white;
+    transition: background-color 0.5s;
+}
+
+.applock main input[type=password]::placeholder {
+    color: white;
+    font-size: 0.85rem;
+    opacity: 1 !important;
+    font-weight: bold;
+}
+
+.applock main input[type=password]:focus {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.applock main input[type=submit] {
+    width: 100%;
+    padding:5px; 
+    border-radius: calc(3rem / 2);
+    border: 0 none;
+    height: 3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    transition: background-color 0.5s;
+    background-color: rgba(0, 0, 0, 0.6);
+    text-transform: uppercase;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin: 0;
+    margin-top: 1rem;
+}
+
+.applock main input[type=submit]:hover {
+    background-color: rgba(0, 0, 0, 0.51);
+}
+
+.applock .alert-error {
+    background: #EE2B2B;
+    color: white;
+    font-weight: 300;
+    padding: 1.2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.applock .alert-notify {
+    background: #2BEE65;
+    color: white;
+    font-weight: 300;
+    padding: 1.2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}

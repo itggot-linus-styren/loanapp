@@ -1,0 +1,77 @@
+template#responsibleTemplate
+    div
+        input#responsible :name="name" v-model="text" @change="handleChange" type="text" :placeholder="label_text"
+        /label for="responsible" {{ label_text }}
+template#copiableTemplate
+    div class="copiable"
+        div class="textarea"
+            textarea readonly="" ref="textarea" {{ text }}
+        a href="#" @click="onClick" Copy
+template#loanableCard
+    div class="card" v-if="!deleted"
+        input type="checkbox"
+        div class="card-content"
+            div
+                div class="card_name"
+                    h2 ref="card_name" {{ card_name }}
+                    span ref="subtitle1" {{ subtitle1}}
+                div
+                    p ref="subtitle2" {{ subtitle2 }}
+            div
+                div class="dropdown" @click.stop="showDropdown" v-if="can_delete"
+                    i class="fa fa-ellipsis-v info"
+                    div id="dropdown-menu" class="dropdown-content" v-click-outside="hideDropdown" :class="{ show: is_shown }"
+                        a href="#_" @click="deleteLoanable" Delete
+        div class="card-hidden"
+            div class="hidden-content"
+                h3 ref="hidden_label" {{ hidden_label }}
+                p ref="hidden_content" {{ hidden_content }}
+            div
+                a :href="url" Loan 
+template#loanedCard
+    div class="card"
+        input type="checkbox"
+        div class="card-content"
+            div
+                div class="card_name"
+                    h2 ref="card_name" {{ card_name }}
+                    span ref="subtitle1" {{ subtitle1}}
+                div
+                    p ref="subtitle2" {{ subtitle2 }}
+            div
+                a :href="popupurl" class="info"
+                    i class="fa fa-info-circle"
+        div class="card-hidden"
+            div class="hidden-content"
+                h3 Loaned by
+                p ref="loaned_by" {{ loaned_by }}
+            div
+                a :href="url" Return 
+template#lightbox
+    a :id="id" class="lightbox" href="#_"
+        div class="hidden-content"
+            div class="card_name"
+                h2 ref="card_name" {{ card_name }}
+                span ref="subtitle1" {{ subtitle1}}
+            div
+                p ref="subtitle2" {{ subtitle2 }}
+            div
+                hr
+                div class="card_sub"
+                    h4 Loaned by
+                    p ref="loaned_by" {{loaned_by}}
+                div class="card_sub"
+                    h4 Loaned since
+                    p ref="loaned_at" {{loaned_at}}
+                div class="card_sub"
+                    h4 Loan purpose
+                    p ref="purpose" {{purpose}}
+                div class="card_sub"
+                    h4 Loan location
+                    p ref="location" {{location}}
+template#alertError
+    div class="alert-error" :class="{ active: alert }"
+        p ref="text" {{ alert }}
+template#alertNotify
+    div class="alert-notify" :class="{ active: alert }"
+        p ref="text" {{ alert }}

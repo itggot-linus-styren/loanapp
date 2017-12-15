@@ -1,0 +1,7 @@
+== partial :'partials/layout'
+body
+	== partial :'partials/header'
+	== partial :'partials/main'
+		p HTTP Status 404 - #{request.path_info}
+
+		a href="/" Go home

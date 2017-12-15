@@ -1,0 +1,13 @@
+div class="whitebg"
+h2 Change app lock password
+form action="/postchange" method="post"
+	div
+		input#old_password name="change[old_password]" type="password" /
+		label for="old_password" Old password
+	div
+		input#password name="change[password]" type="password" /
+		label for="password" Password
+	div
+		input#confirm_password name="change[confirm_password]" type="password" /
+		label for="confirm_password" Confirm password
+  	input type="submit" value="Change"

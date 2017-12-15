@@ -1,0 +1,10 @@
+main	
+	- if flash[:error]
+		alert-error alert="#{flash[:error]}"
+	- else
+		alert-error :alert="errorAlert"
+	- if flash[:notify]
+		alert-notify alert="#{flash[:notify]}"
+	- else
+		alert-notify :alert="notifyAlert"
+	== yield if block_given?

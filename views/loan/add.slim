@@ -1,0 +1,7 @@
+h2 Create a new loanable #{@loanable.loanable_name}
+form action="/postcreate" method="post"   
+	- @loanable.fields.each do |name, field|
+		div
+			input id="#{name}" name="create[#{name}]" type="#{field.type}" placeholder="#{field.description}"
+			/label for="#{name}" #{field.description}
+  	input type="submit" value="Create"

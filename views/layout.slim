@@ -1,0 +1,9 @@
+== partial :'partials/layout'
+	link rel="stylesheet" href="/css/card.css"
+body
+	== partial :'partials/vuetemplates'
+	div#app
+		== partial :'partials/header'
+		== partial :'partials/navbar'
+		== partial :'partials/main' { yield }
+== partial :'partials/scripts'		

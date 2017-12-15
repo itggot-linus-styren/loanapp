@@ -1,0 +1,91 @@
+digraph  {
+rankdir = "LR";
+ranksep = "0.5";
+nodesep = "0.4";
+pad = "0.4,0.4";
+margin = "0,0";
+concentrate = "true";
+labelloc = "t";
+fontsize = "13";
+fontname = "Arial Bold";
+splines = "spline";
+node[ shape  =  "Mrecord" , fontsize  =  "10" , fontname  =  "Arial" , margin  =  "0.07,0.05" , penwidth  =  "1.0"];
+edge[ fontname  =  "Arial" , fontsize  =  "7" , dir  =  "both" , arrowsize  =  "0.9" , penwidth  =  "1.0" , labelangle  =  "32" , labeldistance  =  "1.8"];
+rankdir = "TB";
+label = "Domain model\n\n";
+m_Applock [label = <{<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Applock</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="encrypted_password">encrypted_password <font face="Arial Italic" color="grey60">string</font></td></tr>
+</table>
+}>];
+m_Car [label = <{<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Car</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="brand">brand <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="name">name <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="status">status <font face="Arial Italic" color="grey60">string</font></td></tr>
+</table>
+}>];
+m_Harddrive [label = <{<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Harddrive</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="brand">brand <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="disksize">disksize <font face="Arial Italic" color="grey60">decimal</font></td></tr>
+  <tr><td align="left" width="130" port="name">name <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="status">status <font face="Arial Italic" color="grey60">string</font></td></tr>
+</table>
+}>];
+m_Invitation [label = <{<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Invitation</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="expiration_date">expiration_date <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="token">token <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="user_type">user_type <font face="Arial Italic" color="grey60">string</font></td></tr>
+</table>
+}>];
+m_Loan [label = <{<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">Loan</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="loanable_type">loanable_type <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="loaned_at">loaned_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="location">location <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="purpose">purpose <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="responsible">responsible <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="returned_at">returned_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+</table>
+}>];
+m_User [label = <{<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial Bold" point-size="11">User</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="encrypted_password">encrypted_password <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="registred_at">registred_at <font face="Arial Italic" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="user_type">user_type <font face="Arial Italic" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="username">username <font face="Arial Italic" color="grey60">string</font></td></tr>
+</table>
+}>];
+  m_Car -> m_Loan [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Harddrive -> m_Loan [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Loan -> m_Loan [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Loan -> m_Car [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Loan -> m_Harddrive [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_User -> m_Invitation [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_User -> m_Invitation [arrowhead = "normal", arrowtail = "none", weight = "1"];
+  m_Car -> m_Loan [arrowhead = "none", arrowtail = "none", weight = "1"];
+  m_Harddrive -> m_Loan [arrowhead = "none", arrowtail = "none", weight = "1"];
+  m_Loan -> m_Loan [arrowhead = "none", arrowtail = "none", weight = "1"];
+  m_User -> m_User [arrowhead = "none", arrowtail = "none", weight = "1"];
+  m_User -> m_User [arrowhead = "none", arrowtail = "none", weight = "1"];
+}

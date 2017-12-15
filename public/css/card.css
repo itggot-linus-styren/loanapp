@@ -1,0 +1,279 @@
+/*
+div class="card"
+div class="card-content"
+    div
+        div
+            h2 {{ card_name }}
+            span {{ subtitle1}}
+        div
+            p {{ subtitle2 }}
+    div
+        i class="fas fa-ellipsis-v"
+div class="card-hidden"
+    div class="hidden-content"
+        h3 {{ hidden_label }}
+        p {{ hidden_content }}
+    a href="#" @click="onClick" Loan 
+*/
+.card {
+    background: white;
+    width: 100%;
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;    
+}
+
+.card-hidden {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: #E5E5E5;
+    display: flex;
+    width: 100%;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.hidden-content {
+    width: 100%;
+    margin-top: -0.5rem;
+    margin-left: 1.5rem;
+}
+
+.hidden-content h2 {
+    margin: 0;
+}
+
+.hidden-content p {
+    margin: 0;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.card-hidden > div:last-of-type {
+    display: flex;
+    align-items: center;
+    flex: 0;
+    justify-content: center;
+}
+
+.card-hidden a {
+    background: #0E212D;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    font-size: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin: 1rem;
+    text-decoration: none;    
+}
+
+.card-content {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    /*z-index: 1;*/
+    transition: margin-bottom 0.3s ease;
+}
+
+.card-content > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card_name {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+}
+
+.card_name > h2 {
+	position: relative;
+	text-decoration: none;
+    padding-right: 1rem;
+	color: black;
+	font-weight: 300;
+    background: none;
+    margin: 0;
+}
+
+.card_name > h2::after {
+    position: absolute;
+    top: calc(50% - 5px / 2);
+    left: calc(100% - 11px);
+    content: '';
+    background-color:rgba(0, 0, 0, 0.54);
+    border-radius: 50%;
+    width: 5px;
+    height: 5px;
+    pointer-events: none;
+}
+
+.card-content > div > div:first-of-type > span {
+	color:rgba(0, 0, 0, 0.54);
+}
+
+.card-content > div > div:last-of-type {
+    padding-left: 0.5rem;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.card-content > div > div:last-of-type p {
+    font-size: 0.8rem;
+    font-weight: 300;
+    margin: 0;
+}
+
+.card-content > div:last-of-type {
+    width: 100%;
+    display: flex;
+    color:rgba(0, 0, 0, 0.54);
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-right: 1rem;
+    flex: 0;
+}
+
+.card input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 2rem;
+  
+  cursor: pointer;
+  
+  opacity: 0;
+  
+  -webkit-touch-callout: none;
+}
+
+.card input:checked ~ .card-hidden {
+  top: calc(100% / 2);
+  opacity: 1;
+  bottom: 0;
+  z-index: 10;
+}
+
+.card input:checked ~ .card-content {
+    margin-bottom: 6rem;
+}
+
+a.info {
+    position: relative;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.54);
+    transition: transform 0.3s ease;
+}
+
+a.info:hover {
+    transform: scale(1.5, 1.5);
+}
+
+.lightbox {
+	display: none;
+
+	position: fixed;
+	z-index: 999;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+    background: rgba(0,0,0,0.8);
+    
+    text-decoration: none;    
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox .card_name {
+    padding-left: 0;
+}
+
+.lightbox .hidden-content {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    color: black;
+    margin: 0;
+    height: calc(100vh / 3);
+    justify-content: center;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.lightbox:target {
+	outline: none;
+	display: flex;
+}
+
+.card_sub {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 0;
+}
+
+.card_sub > h4 {
+	position: relative;
+	text-decoration: none;
+    padding-right: 1rem;
+	color: black;
+	font-weight: 300;
+    background: none;
+    margin: 0;
+}
+
+.card_sub > h4::after {
+    position: absolute;
+    top: calc(50% - 5px / 2);
+    left: calc(100% - 11px);
+    content: '';
+    background-color:rgba(0, 0, 0, 0.54);
+    border-radius: 50%;
+    width: 5px;
+    height: 5px;
+    pointer-events: none;
+}
+
+.dropdown {
+    position: absolute;
+    display: inline-block;
+    right: 0.4em;
+}
+
+.dropdown-content {
+    display: none;
+    position: relative;
+    margin-top: 60px;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {background-color: #f1f1f1}
+
+.show {display:block;}

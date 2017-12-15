@@ -1,0 +1,10 @@
+div class="whitebg"
+h2 Return "#{@loan.loanable.name}"
+form action="/postreturn" method="post"     
+    responsible-input @update-responsible="updateResponsible" :responsible_person="responsible" name="return[responsible]"
+    - @loan.loanable.updateableAttributes.keys.each do |name|
+        - old_value = @loan.loanable.send(name)
+        div
+            input id="#{name}" name="return[new_#{name}]" type="@loan.loanable.descriptions[name].type" value="#{old_value}" /
+            label for="#{name}" New "#{name}" of #{@loan.loanable.loanable_name}
+    input type="submit" value="Return"

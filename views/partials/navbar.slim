@@ -1,0 +1,32 @@
+nav
+	div#menuToggle
+		input type="checkbox"
+		span
+		span class="smaller"
+		span
+		div#scrim	
+		ul#menu
+			div class="top"
+				div class="item"
+					a href="/loans"
+						li See all loanables
+				- if @type
+					div class="item"
+						a href="/view/#{@type}"
+							li See available #{@loanable.loanable_name}s
+					div class="item"
+						a href="/loans/#{@type}"
+							li See loaned #{@loanable.loanable_name}s					
+				- if session[:user_id]
+					div class="item"
+						a href="/profile"
+							li Profile
+			div class="bottom"
+				- if session[:user_id]
+					div class="item"
+						a href="/logout"
+							li Logout
+				- else
+					div class="item"
+						a href="/login/admin"
+							li Login admin				
