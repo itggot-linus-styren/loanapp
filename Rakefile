@@ -5,7 +5,7 @@ Bundler.require
 set :environment, :production
 
 # load app and models
-dirs = ["models", "sinatra", "managers", "handlers"]
+dirs = ["sinatra", "managers", "handlers"]
 dirs.each do |dir|
     Dir["#{dir}/*.rb"].each {|file| require_relative file }
 end
