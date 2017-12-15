@@ -6,6 +6,7 @@ class LoanApp < Sinatra::Base
     #                            :path => '/',
                                 :expire_after => 2592000, # In seconds
                                 :secret => 'qgPvYdBwZDcb9UKWW39O'
+    set :database_file, 'config/database.yml'
     register Sinatra::Flash
     register Sinatra::ActiveRecordExtension
     helpers Sinatra::LoanHelper, Sinatra::ReturnHelper, Sinatra::CreateHelper,

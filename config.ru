@@ -4,6 +4,8 @@ Bundler.require
 
 set :environment, :production
 
+ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
+
 # load app and models
 dirs = ["models", "sinatra", "managers", "handlers"]
 dirs.each do |dir|
