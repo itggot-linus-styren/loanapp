@@ -1,4 +1,26 @@
 nav
+	div#menu-desktop
+		a href="/loans"
+			i class="icon fa fa-list fa-2x"
+			b See all loanables
+		- if @type
+			a href="/view/#{@type}"
+				i class="icon fa fa-hand-paper-o fa-2x"
+				b See available #{@loanable.loanable_name}s
+			a href="/loans/#{@type}"
+				i class="icon fa fa-hand-rock-o fa-2x"
+				b See loaned #{@loanable.loanable_name}s					
+		- if session[:user_id]
+			a href="/profile"
+				i class="icon fa fa-user fa-2x"
+				b Profile
+			a href="/logout"
+				i class="icon fa fa-sign-out fa-2x"
+				b Logout
+		- else
+			a href="/login/admin"
+				i class="icon fa fa-sign-in fa-2x"
+				b Login admin
 	div#menuToggle
 		input type="checkbox"
 		span

@@ -2,7 +2,7 @@ require 'bundler'
 
 Bundler.require
 
-set :environment, :production
+#set :environment, :production
 
 require_relative 'config/environments'
 
