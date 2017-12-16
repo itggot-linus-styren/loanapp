@@ -8,9 +8,17 @@ class Harddrive < AbstractLoanable
     @@fields = {
         "name" => Field.new(:text, "HDD name"),
         "brand" => Field.new(:text, "Brand"),
-        "disksize" => Field.new(:number, "Disksize"),
+        "disksize" => Field.new(:number, "Disksize", ["TB", "GB"]),
         "status" => Field.new(:text, "Status")
     }
+
+    def self.format_field(field, data, option)
+        formatted_data = data
+        if field == "disksize" && option == "GB"
+            formatted_data = data.to_f / 1000.0
+        end
+        formatted_data
+    end
 
     def set_getters_and_setters       
         @staticAttributes = {

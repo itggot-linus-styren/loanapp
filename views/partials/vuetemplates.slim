@@ -18,10 +18,10 @@ template#loanableCard
                 div
                     p ref="subtitle2" {{ subtitle2 }}
             div
-                div class="dropdown" @click.stop="showDropdown" v-if="can_delete"
-                    i class="fa fa-ellipsis-v info"
+                div class="dropdown" @click.stop="showDropdown" v-if="can_delete"                    
                     div id="dropdown-menu" class="dropdown-content" v-click-outside="hideDropdown" :class="{ show: is_shown }"
                         a href="#_" @click="deleteLoanable" Delete
+                    i class="fa fa-ellipsis-v info"
         div class="card-hidden"
             div class="hidden-content"
                 h3 ref="hidden_label" {{ hidden_label }}

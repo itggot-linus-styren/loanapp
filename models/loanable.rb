@@ -23,6 +23,13 @@ class AbstractLoanable < ActiveRecord::Base
         raise InvalidSubclassExtension.new("set_getters_and_setters")
     end
 
+    # @abstract Subclass is expected to implement #format_field
+    # @!method format_field
+    #    Takes raw field data and option and formats it
+    def self.format_field(data, option)
+        raise InvalidSubclassExtension.new("format_field")
+    end
+
     def self.loanable_name
         @@loanable_name
     end

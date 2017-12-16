@@ -108,7 +108,11 @@ module Sinatra
 
             unless has_error
                 params[:create][:deleted] = false
-                #newloanable = loanable.new(params[:create])
+                loanable.fields.each do |name, _|
+                    if params[:options][name]
+                        params[:create][name] = loanable.format_field(name, params[:create][name], params[:options][name])
+                    end
+                end
                 newloanable = loanable.find_or_initialize_by(:name => name).update!(params[:create])
     
                 unless newloanable
