@@ -60,7 +60,7 @@ usermgr = UserManager.new
 LoanApp.set :usermgr, usermgr
 
 # register handlers
-loanmgr.register("hdd", LoanHandler.new(Harddrive))
+loanmgr.register("hdd", LoanHandler.new(Car))
 
 adminhandler = UserHandler.new(User, "admin")
 adminhandler.permissions = [:create, :change, :invite, :delete]
