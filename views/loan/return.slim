@@ -5,6 +5,6 @@ form action="/postreturn" method="post"
     - @loan.loanable.updateableAttributes.keys.each do |name|
         - old_value = @loan.loanable.send(name)
         div
-            input id="#{name}" name="return[new_#{name}]" type="@loan.loanable.descriptions[name].type" value="#{old_value}" /
-            label for="#{name}" New "#{name}" of #{@loan.loanable.loanable_name}
+            input id="#{name}" name="return[new_#{name}]" type="@loan.loanable.descriptions[name].type" value="#{old_value}" placeholder="New #{name}"
+            /label for="#{name}" New "#{name}" of #{@loan.loanable.loanable_name}
     input type="submit" value="Return"
