@@ -13,7 +13,7 @@ class Loan < ActiveRecord::Base
 
     scope :for_loanable_type, ->(class_name){ where("loanable_type = ?", class_name) }
 
-    scope :with_active_loans, ->(class_name) { where("returned_at IS NULL") }
+    scope :with_active_loans, ->(class_name) { where("loanable_type = ? AND returned_at IS NULL", class_name) }
     #scope :active_loans_type, ->(class_name){ joins("INNER JOIN #{class_name}s ON (loanable_type = '#{class_name}' AND #{class_name}s.id = loanable_id AND #{class_name}s.active_loan_id IS NOT NULL)").includes(:loan, class_name) }
 end
 
