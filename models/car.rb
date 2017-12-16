@@ -1,11 +1,12 @@
 require_relative 'field'
 require_relative 'loanable'
 
-class Car < AbstractLoanable
+class Car < ActiveRecord::Base
+    include LoanableExtension
 
-    @@loanable_name = itself.to_s.downcase
+    @loanable_name = itself.to_s.downcase
 
-    @@fields = {
+    @fields = {
         "name" => Field.new(:text, "Car registration number"),
         "brand" => Field.new(:text, "Brand"),
         "status" => Field.new(:text, "Status")

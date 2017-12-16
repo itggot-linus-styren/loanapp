@@ -1,49 +1,27 @@
 require_relative 'field'
 
-class AbstractLoanable < ActiveRecord::Base
-    has_many :loans, :as => :loanable
-    after_initialize :set_getters_and_setters
+module LoanableExtension
 
-    scope :not_deleted, ->{ where(:deleted => false) }
+    extend ActiveSupport::Concern
 
-    scope :with_active_loans, ->{ where.not(:deleted => true, :active_loan_id => nil) }
+    included do
+        has_many :loans, :as => :loanable
+        after_initialize :set_getters_and_setters
 
-    self.abstract_class = true
+        scope :not_deleted, ->{ where(:deleted => false) }
+    end
 
-    @@loanable_name = nil
-    @@fields = nil
+    @loanable_name = nil
+    @fields = nil
 
     attr_reader :staticAttributes, :updateableAttributes
 
-    # @abstract Subclass is expected to implement #set_getters_and_setters
-    # @!method set_getters_and_setters
-    #    Construction of getters and setters for fields associated
-    #    with the specific loanable
-    def set_getters_and_setters       
-        raise InvalidSubclassExtension.new("set_getters_and_setters")
-    end
-
-    # @abstract Subclass is expected to implement #format_field
-    # @!method format_field
-    #    Takes raw field data and option and formats it
-    def self.format_field(data, option)
-        raise InvalidSubclassExtension.new("format_field")
-    end
-
-    def self.loanable_name
-        @@loanable_name
-    end
-
-    def self.fields
-        @@fields
-    end
-
     def loanable_name
-        @@loanable_name
+        self.class.loanable_name
     end
 
     def fields
-        @@fields
+        self.class.fields
     end
     
     def subtitle1
@@ -61,5 +39,18 @@ class AbstractLoanable < ActiveRecord::Base
     def hidden_content
         @hidden_content.call
     end
+
+    class_methods do
+
+        def loanable_name
+            @loanable_name
+        end
+
+        def fields
+            @fields
+        end
+    end
     
 end
+
+#ActiveRecord::Base.send(:include, LoanableExtension)

@@ -90,6 +90,10 @@ module Sinatra
             @usermgr = usermgr
             if loanmgr.has_association(@type)
                 @loanable = loanmgr.loanable_by_type(@type)
+                puts "----------------------------------"
+                puts @loanable
+                puts @loanable.loanable_name
+                puts "----------------------------------"
                 @loanables = @loanable.where.not(:deleted => true, :id => Loan.with_active_loans(@loanable))
                 #@loanables = @loanable.joins(:loans).where.not("#{@loanable.loanable_name}s.id = loans.loanable_id AND loans.returned_at IS NULL")
                 session[:type] = @type

@@ -1,11 +1,12 @@
 require_relative 'field'
 require_relative 'loanable'
 
-class Harddrive < AbstractLoanable
+class Harddrive < ActiveRecord::Base
+    include LoanableExtension
 
-    @@loanable_name = itself.to_s.downcase
+    @loanable_name = itself.to_s.downcase
 
-    @@fields = {
+    @fields = {
         "name" => Field.new(:text, "HDD name"),
         "brand" => Field.new(:text, "Brand"),
         "disksize" => Field.new(:number, "Disksize", ["TB", "GB"]),
