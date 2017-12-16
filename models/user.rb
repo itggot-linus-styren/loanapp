@@ -7,6 +7,6 @@ class User < ActiveRecord::Base
 
     scope :for_user_type, ->(type){ where("user_type = ?", type) }
     
-    scope :find_by_username_nocase, ->(username){ where("LOWER(username) = ?", username.downcase) }
+    #scope :find_by_username_nocase, ->(username){ where("LOWER(username) = ?", username.downcase) }
 
 end
