@@ -45,10 +45,10 @@ class LoanApp < Sinatra::Base
     end
 
     # temporary
-    #get '/register' do
-    #    session[:dev] = true
-    #    slim :'user/register'
-    #end
+    get '/register' do
+        session[:dev] = true
+        slim :'user/register'
+    end
 
     get '/logout' do
         logout_route
