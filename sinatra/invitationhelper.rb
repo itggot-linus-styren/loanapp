@@ -117,8 +117,8 @@ module Sinatra
             else
                 # temporary
                 if @invitation
-                    @invitation.used_by = user
-                    @invitation.save
+                    puts "Set used_by to " + user.username
+                    @invitation.update(:used_by => user)
                 end
                 flash[:notify] = "The user \"#{username}\" was successfully registred."
                 redirect "/"
