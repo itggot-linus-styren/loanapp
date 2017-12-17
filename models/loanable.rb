@@ -14,7 +14,11 @@ module LoanableExtension
     @loanable_name = nil
     @fields = nil
 
-    attr_reader :staticAttributes, :updateableAttributes
+    attr_reader :staticAttributes, :updateableAttributes, :values
+
+    def loaned_count
+        Loan.for_loanable_type(self.class).where(:loanable_id => self.id).count
+    end
 
     def loanable_name
         self.class.loanable_name

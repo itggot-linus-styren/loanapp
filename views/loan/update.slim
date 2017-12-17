@@ -1,0 +1,13 @@
+h2 Update #{@loanable.name}
+form action="/postupdate" method="post"   
+	- @loanable.fields.each do |name, field|
+		- datafield = @loanable.values[name]
+		div
+			- if field.options
+				div class="options"
+					select name="options[#{name}]"
+						- field.options.each do |value|
+							option[value="#{value}" selected=("selected" if datafield.option=="#{value}")] #{value}
+			input id="#{name}" name="create[#{name}]" type="#{field.type}" placeholder="#{field.description}" value="#{datafield.value}"
+			/label for="#{name}" #{field.description}
+  	input type="submit" value="Update"

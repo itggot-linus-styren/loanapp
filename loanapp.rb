@@ -74,6 +74,10 @@ class LoanApp < Sinatra::Base
         add_route(settings.loanmgr, settings.usermgr, params)
     end
 
+    get '/update/:type/:id' do
+        update_route(settings.loanmgr, settings.usermgr, params)
+    end
+
     get '/delete/:type/:id' do
         delete_route(settings.loanmgr, settings.usermgr, params)
     end
@@ -124,6 +128,10 @@ class LoanApp < Sinatra::Base
 
     post '/postcreate' do
         postcreate_route(settings.loanmgr, params)        
+    end
+
+    post '/postupdate' do
+        postupdate_route(settings.loanmgr, params)        
     end
 
     post '/postreturn' do

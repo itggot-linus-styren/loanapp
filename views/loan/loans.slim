@@ -1,6 +1,8 @@
-- @header = "Loaned #{@loanable.loanable_name.capitalize}s"
+- @header = "Loaned #{@loanable.loanable_name}s"
+search @on-search="onSearch"
 - @loans.each do |loan|
     loaned-card[
+        :keyword="keyword"
         id="#{loan.id}"
         url="/return/#{@type}/#{loan.id}"
         card_name="#{loan.loanable.name}"
@@ -17,7 +19,8 @@ div class="hidden"
             loaned_by="#{loan.responsible}"
             location="#{loan.location}"
             purpose="#{loan.purpose}"
-            loaned_at="#{loan.loaned_at}"]
+            loaned_at="#{loan.loaned_at}"
+            loaned_count="#{loan.loanable.loaned_count}"]
 /desktop below
 /div class="tbl-header"
     table cellpadding="0" cellspacing="0" border="0"

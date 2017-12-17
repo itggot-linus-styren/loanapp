@@ -8,7 +8,7 @@ template#copiableTemplate
             textarea readonly="" ref="textarea" {{ text }}
         a href="#" @click="onClick" Copy
 template#loanableCard
-    div class="card" v-if="!deleted"
+    div class="card" v-if="!deleted && card_name.toLowerCase().includes(keyword)"
         input type="checkbox"
         div class="card-content"
             div
@@ -18,9 +18,10 @@ template#loanableCard
                 div
                     p ref="subtitle2" {{ subtitle2 }}
             div
-                div class="dropdown" @click.stop="showDropdown" v-if="can_delete"                    
+                div class="dropdown" @click.stop="showDropdown" v-if="show_context"                    
                     div id="dropdown-menu" class="dropdown-content" v-click-outside="hideDropdown" :class="{ show: is_shown }"
                         a href="#_" @click="deleteLoanable" Delete
+                        a :href="update_url" Update
                     i class="fa fa-ellipsis-v info"
         div class="card-hidden"
             div class="hidden-content"
@@ -29,7 +30,7 @@ template#loanableCard
             div
                 a :href="url" Loan 
 template#loanedCard
-    div class="card"
+    div class="card" v-if="card_name.toLowerCase().includes(keyword) || loaned_by.toLowerCase().includes(keyword)"
         input type="checkbox"
         div class="card-content"
             div
@@ -58,6 +59,9 @@ template#lightbox
             div
                 hr
                 div class="card_sub"
+                    h4 Times loaned
+                    p ref="loaned_count" {{loaned_count}}
+                div class="card_sub"
                     h4 Loaned by
                     p ref="loaned_by" {{loaned_by}}
                 div class="card_sub"
@@ -75,3 +79,6 @@ template#alertError
 template#alertNotify
     div class="alert-notify" :class="{ active: alert }"
         p ref="text" {{ alert }}
+template#searchTemplate
+    div
+        input#search name="search" type="text" placeholder="Search..." v-model="keyword" @input="onChange"

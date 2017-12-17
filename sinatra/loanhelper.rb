@@ -96,10 +96,14 @@ module Sinatra
 
                 @has_create_permission = false
                 @has_delete_permission = false
+                @has_update_permission = false
+                @show_context = false
                 if session[:user_id]
                     @user = User.find(session[:user_id])
                     @has_create_permission = @usermgr.has_permission?(@user, :create)
                     @has_delete_permission = @usermgr.has_permission?(@user, :delete)
+                    @has_update_permission = @usermgr.has_permission?(@user, :update)
+                    @show_context = true
                 end
 
                 slim :'loan/view'

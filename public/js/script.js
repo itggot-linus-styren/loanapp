@@ -87,7 +87,7 @@ Vue.component(`copiable-input`, {
 
 Vue.component(`loanable-card`, {
     props: {
-        can_delete: {
+        show_context: {
             type: Boolean
         }, 
         id: {
@@ -113,12 +113,17 @@ Vue.component(`loanable-card`, {
         },
         hidden_content: {
             type: String
+        },
+        keyword: {
+            type: String,
+            default: ""
         }
     },
     data() {
         return {
             is_shown: false,
-            deleted: false
+            deleted: false,
+            update_url: ""
         }
     },
     template: '#loanableCard',
@@ -172,7 +177,6 @@ Vue.component(`loanable-card`, {
             this.is_shown = false;            
         },
         deleteLoanable() {
-            //this.$emit(`delete-loanable`, this.id);
             this.$http.get(`/delete/${this.loanable_type}/${this.id}`)
             .then(response => response.json())
             .then(json => {
@@ -193,6 +197,9 @@ Vue.component(`loanable-card`, {
         failedDeleted(error) {
             this.$emit(`alert-error`, error);
         }
+    },
+    created() {
+        this.update_url = `/update/${this.loanable_type}/${this.id}`
     }
 });
 
@@ -215,6 +222,10 @@ Vue.component(`loaned-card`, {
         },
         loaned_by: {
             type: String
+        },
+        keyword: {
+            type: String,
+            default: ""
         }
     },
     data() {
@@ -265,6 +276,9 @@ Vue.component(`loaned-lightbox`, {
         },
         loaned_at: {
             type: String
+        },
+        loaned_count: {
+            type: String
         }
     },
     template: '#lightbox'
@@ -290,13 +304,13 @@ Vue.component(`alert-notify`, {
             this.is_active = true;
             this.text = alert;
         }
-},*//*
+},*/
     created() {
         if (this.alert != "") {
             this.is_active = true;
             this.text = this.alert;
         }
-    }*/
+    }
 });
 
 Vue.component(`alert-error`, {
@@ -328,12 +342,27 @@ Vue.component(`alert-error`, {
     }
 });
 
+Vue.component(`search`, {
+    data() {
+        return {
+            keyword: ""
+        }
+    },
+    template: '#searchTemplate',
+    methods: {
+        onChange() {
+            this.$emit(`on-search`, this.keyword.toLowerCase());
+        }
+    }
+});
+
 let app = new Vue({
     el: `#app`,
     data: {
         responsible: "",
         errorAlert: "",
-        notifyAlert: ""
+        notifyAlert: "",
+        keyword: ""
     },
     methods: {
         updateResponsible(responsible) {
@@ -344,6 +373,9 @@ let app = new Vue({
         },
         doAlertNotify(alert) {
             this.notifyAlert = alert;
+        },
+        onSearch(keyword) {
+            this.keyword = keyword;
         }
     },
     created() {

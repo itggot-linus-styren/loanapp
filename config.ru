@@ -64,7 +64,7 @@ loanmgr.register("hdd", LoanHandler.new(Harddrive))
 loanmgr.register("car", LoanHandler.new(Car))
 
 adminhandler = UserHandler.new(User, "admin")
-adminhandler.permissions = [:create, :change, :invite, :delete]
+adminhandler.permissions = [:create, :update, :change, :invite, :delete]
 usermgr.register("admin", adminhandler)
 
 # temporary development stuff

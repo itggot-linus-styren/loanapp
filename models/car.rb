@@ -21,6 +21,12 @@ class Car < ActiveRecord::Base
 
         @updateableAttributes = {"status" => ->(value){self.status = value}}
 
+        @values = {
+            "name" => Datafield.new(->{self.name}),
+            "brand" => Datafield.new(->{self.brand}),
+            "status" => Datafield.new(->{self.status})
+        }
+
         # for mobile
         @subtitle1 = ->{"#{self.brand}"} 
         @subtitle2 = ->{"status: #{self.status}"}

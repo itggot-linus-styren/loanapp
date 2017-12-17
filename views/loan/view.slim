@@ -4,11 +4,13 @@
         /a href="/add/#{@type}" Create a new loanable #{@loanable.loanable_name}
         a href="/add/#{@type}" class="float"
             i class="fa fa-plus my-float"
+search @on-search="onSearch"
 - @loanables.each do |loanable|
     loanable-card[
         @alert-notify="doAlertNotify"
         @alert-error="doAlertError"
-        can_delete=@has_delete_permission
+        :keyword="keyword"
+        show_context=@show_context
         id="#{loanable.id}"
         loanable_type="#{@type}"
         url="/loan/#{@type}/#{loanable.id}"
