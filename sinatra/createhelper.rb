@@ -34,7 +34,7 @@ module Sinatra
 
         def update_route(loanmgr, usermgr, params)
             userid = session[:user_id]
-            @type = params[:type]
+            @type = params[:type]            
 
             has_error = false
             if loanmgr.has_association(@type)
@@ -43,7 +43,7 @@ module Sinatra
                     @user = User.find(userid)
                 end
                 if @user && usermgr.has_permission?(@user, :update)
-                    @loanable = loanmgr.find(@type, params[:id])                    
+                    @loanable = loanmgr.find(@type, params[:id])
                     if !@loanable || @loanable.deleted
                         flash[:error] = "The #{loanable_name} doesn't exist or is deleted."
                         has_error = true
@@ -67,6 +67,7 @@ module Sinatra
             if has_error
                 redirect redirect_to_back_or_default
             else
+                session[:loanid] = params[:id]
                 slim :'loan/update'
             end
         end
@@ -179,13 +180,14 @@ module Sinatra
             form = params[:create]
             name = form[:name]
             type = session[:type]
+            loanid = session[:loanid]
 
             has_error = false
             unless loanmgr.has_association(type)
                 flash[:error] = "The loan type \"#{type}\" is unknown."
                 has_error = true
             end
-            if has_error || !type
+            if has_error || !type || !loanid
                 redirect "/"
             end
 
@@ -195,15 +197,17 @@ module Sinatra
                 loanable = loanmgr.loanable_by_type(type)
                 loanable_name = loanable.loanable_name
         
-                loanable_by_name = loanmgr.find_by_name(type, name)
-                if !loanable_by_name || loanable_by_name.deleted
+                loanable_by_id = loanmgr.find(type, loanid)
+                if !loanable_by_id || loanable_by_id.deleted
                     flash[:error] = "The #{loanable_name} doesn't exist or is deleted."
                     has_error = true
+                else
+                    oldname = loanable_by_id.name
                 end
             end
             
             unless has_error
-                newloanable = create_or_update(loanable, params, name)                
+                newloanable = create_or_update(loanable, params, oldname)                
     
                 unless newloanable
                     flash[:error] = "Sorry, there was an error updating the #{loanable_name}."
