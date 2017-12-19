@@ -372,7 +372,7 @@ input[type="radio"] {
 }
 
 /* mobile-first */
-@media (max-width: 1024px) {
+@media (max-width: 480px) {
 
 	main {
 		width: 100vw;
@@ -563,11 +563,16 @@ input[type="radio"] {
 	#menuToggle input:checked ~ #scrim {
 		pointer-events: all;
 		background: rgba(0, 0, 0, 0.54);
+	}	
+
+	#search {
+		width: calc(100% - 2rem);
+		margin-top: 1rem;
 	}
 }
 
 /* desktop */
-@media (min-width: 1025px) {
+@media (min-width: 481px) {
 
 	#menuToggle {
 		display: none;
@@ -645,7 +650,8 @@ input[type="radio"] {
         flex-direction: column;
         padding: 2rem;
         margin: auto;
-        width: calc(100vw / 3);
+		width: calc(100vw / 3);
+		min-width: 480px;
         -webkit-box-shadow: -4px 4px 58px -26px rgba(0,0,0,0.53);
         -moz-box-shadow: -4px 4px 58px -26px rgba(0,0,0,0.53);
         box-shadow: -4px 4px 58px -26px rgba(0,0,0,0.53);

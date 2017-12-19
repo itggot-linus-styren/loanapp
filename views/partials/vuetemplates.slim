@@ -80,5 +80,4 @@ template#alertNotify
     div class="alert-notify" :class="{ active: alert }"
         p ref="text" {{ alert }}
 template#searchTemplate
-    div
-        input#search name="search" type="text" placeholder="Search..." v-model="keyword" @input="onChange"
+    input#search name="search" type="text" placeholder="Search..." v-model="keyword" @input="onChange"

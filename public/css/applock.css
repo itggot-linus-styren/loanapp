@@ -130,7 +130,7 @@
 }
 
 /* mobile-first */
-@media (max-width: 1024px) {
+@media (max-width: 480px) {
     .applock > header {
         position: fixed;
         top: 10%;
@@ -170,7 +170,7 @@
 }
 
 /* desktop */
-@media (min-width: 1025px) {
+@media (min-width: 481px) {
     header {
         position: fixed;
         top: 0;

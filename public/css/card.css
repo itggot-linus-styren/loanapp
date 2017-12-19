@@ -39,6 +39,7 @@ div class="card-hidden"
 
 .hidden-content {
     width: 100%;
+    max-width: 480px;
     margin-top: -0.5rem;
     margin-left: 1.5rem;
 }
