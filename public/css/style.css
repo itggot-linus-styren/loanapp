@@ -193,10 +193,11 @@ input[type=submit] {
 	box-shadow: 2px 2px 3px #999;
 	transform: none;
 	transition: transform 0.3s ease;
+	z-index: 1;
 }
 
 .my-float {
-	margin-top:22px;
+	margin-top:22px;	
 }
 
 .float:hover {
@@ -402,7 +403,7 @@ input[type="radio"] {
 		right: 1rem;
 		left: calc(100% - 1rem - 40px);
 		
-		z-index: 1;
+		z-index: 999;
 		
 		-webkit-user-select: none;
 		user-select: none;

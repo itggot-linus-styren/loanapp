@@ -55,6 +55,7 @@ module Sinatra
             @invitation = Invitation.claimable.where(:token => params[:token]).first
             if @invitation
                 session[:token] = @invitation.token
+                session[:permitted] = true
                 slim :'user/register'
             else
                 flash[:error] = "Invitation with token \"#{params[:token]}\" does not exist - it has expired, is invalid or has already been claimed."
