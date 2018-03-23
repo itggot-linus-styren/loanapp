@@ -27,6 +27,8 @@ class Car < ActiveRecord::Base
             "status" => Datafield.new(->{self.status})
         }
 
+        # TODO: consider https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel
+
         # for mobile
         @subtitle1 = ->{"#{self.brand}"} 
         @subtitle2 = ->{"status: #{self.status}"}

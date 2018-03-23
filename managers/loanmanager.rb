@@ -7,9 +7,9 @@ class LoanManager < Manager
         @methods += [:make_loan, :return_loan, :is_loaned?]
     end
 
-    def make_loan(type, id, loan)
+    def make_loan(type, loanable, loan)
         if @associations[type]
-            @associations[type].make_loan(id, loan)
+            @associations[type].make_loan(loanable, loan)
         else
             raise NoHandlerError.new(type)
         end
@@ -26,6 +26,15 @@ class LoanManager < Manager
     def is_loaned?(type, loanable)
         if @associations[type]
             @associations[type].is_loaned?(loanable)
+        else
+            raise NoHandlerError.new(type)
+        end
+    end
+
+    def not_deleted?(type, name)
+        if @associations[type]
+            loanable_by_name = @associations[type].find_by_name(name)
+            loanable_by_name && !loanable_by_name.deleted
         else
             raise NoHandlerError.new(type)
         end

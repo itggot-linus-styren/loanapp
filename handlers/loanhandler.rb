@@ -14,13 +14,10 @@ class LoanHandler
         @loanable.find_by_name(name)
     end
 
-    def make_loan(id, loan)
-        loanable = find(id)
-        if loanable
-            loan = Loan.new(loan)
-            loan.loanable = loanable
-            loan.save
-        end
+    def make_loan(loanable, loan)
+        loan = Loan.new(loan)
+        loan.loanable = loanable
+        loan.save
     end
 
     def return_loan(loan, values)
