@@ -4,7 +4,6 @@ Den här applikationen används som ett stängt system med lösenordsskydd för 
 
 Funktioner planerade:
 - [ ] Möjlighet att skapa ny typ av lånbart objekt.
-- [ ] Göra en egen ORM och implementera alla funktioner som används i den här applikationen.
 - [x] Skriva om routes till ReST standard.
 - [ ] Kunna se en överblick av alla lånbara objekt i en kalender.
 - [ ] Boka ett lånbart objekt till en viss tid.

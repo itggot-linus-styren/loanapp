@@ -1,14 +1,20 @@
 routes:
+
+
   invites:
     actions:
       new:
         permissions: [invite]
         wants: [user]
+
+
   loginapp:
     views:
       change:
         permissions: [change]
         wants: [user]
+
+
   user:
     actions:
       login:
@@ -17,7 +23,9 @@ routes:
       login:
         wants: [usertype]
       profile:
-        wants: [user]                
+        wants: [user]   
+        
+                     
   loans:
     actions:
       loan:

@@ -1,14 +1,19 @@
 class LoanApp < Sinatra::Base
 
-    #enable :sessions
     use Rack::Session::Cookie,  :key => 'rack.session',
-    #                            :domain => '127.0.0.1',
-    #                            :path => '/',
                                 :expire_after => 2592000, # In seconds
                                 :secret => File.read('config/cookie').strip
     set :database_file, 'config/database.yml'
     register Sinatra::Flash
     register Sinatra::ActiveRecordExtension
+
+    before do
+        # fetch defs from routes.yml
+
+        # RouteFactory.build(HomeController, :)
+
+        # Consider adding def logic to controller super class
+    end
        
     before do
         if !['loginapp', 'invite', nil].include?(request.path_info.split('/')[1]) && !session[:permitted]
