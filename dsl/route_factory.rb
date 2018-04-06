@@ -10,13 +10,12 @@ module RouteFactory
         definition_proxy.instance_eval(&block)
     end
   
-    def self.build(controller, factory_def)
-        def_method = registry[factory_def].call() # TODO invoke method properly
+    def self.build(controller, factory_def, *args)
+        def_method = registry[factory_def].call(*args) # TODO invoke method properly
         attributes = factory.attributes.merge(overrides)
         attributes.each do |attribute_name, value|
-            instance.send("#{attribute_name}=", value)
+            controller.instance_variable_set("@#{attribute_name}", value)
         end
-        instance
     end
 end
   

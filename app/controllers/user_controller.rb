@@ -40,32 +40,8 @@ class UserController < Controller
 
         username = credentials[:username]
         password = credentials[:password]
-
+        
         # TODO: check readability
-        # test driven development?
-        # - test db and environment
-        # - testing controllers
-        # - testing view controllers
-        # - testing dsl and code coverage
-        # documentation
-        # - per method documentation or per class documentation
-        # dsl
-        # - permission checking
-        # - state checking
-        #   - different logic for different states (logged in or not)
-        # - setting instance variables
-        #   - expects (loanable), type and id (loan_helper)
-        # - redirects to?
-        # - difference between view controller and controller
-        #   - error handling
-        #     - context aware error reporting
-        # MVVM + MVC + MVP?
-        # - is viewcontroller a presenter (supervising controller)?
-        # - is viewcontroller a viewmodel?        
-        # - example logged in or logged out different logic (/loans/hdd/view)
-        # create table for new loanable
-        # - postgres json
-        # i18n
 
         other_user = User.find_by_username_nocase(username)        
         other_user.any? && abort_route do

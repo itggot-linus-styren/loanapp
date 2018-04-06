@@ -18,10 +18,10 @@ routes:
   user:
     actions:
       login:
-        wants: [usertype]
+        wants: [user_type]
     views:
       login:
-        wants: [usertype]
+        wants: [user_type]
       profile:
         wants: [user]   
         
