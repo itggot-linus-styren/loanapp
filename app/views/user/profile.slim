@@ -1,13 +1,13 @@
 - @header = "Profile"
 div class="banner"
-	h2 Welcome #{@user.username}
+	h2 Welcome #{user.username}
 	p What would you like to do?
 
 div class="actions"
-	- if @usermgr.has_permission?(@user, :invite)
+	- if usermgr.has_permission?(user, :invite)
 		div class="item"
-			a href="/invite" Create an account invitation
+			a href="/invites/new" Create an account invitation
 
-	- if @usermgr.has_permission?(@user, :change)
+	- if usermgr.has_permission?(user, :change)
 		div class="item"
-			a href="/change" Change app lock password
+			a href="/loginapp/change" Change app lock password

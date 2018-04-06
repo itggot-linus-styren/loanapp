@@ -37,13 +37,13 @@ class InvitesViewController < ViewController
     def claim(params)
         token = params[:token]
 
-        @invitation = Invitation.claimable.where(:token => token).first || abort_route do
+        invitation = Invitation.claimable.where(:token => token).first || abort_route do
             flash[:error] = "Invitation with token \"#{token}\" does not exist - it has expired, is invalid or has already been claimed."
         end
 
-        @ctx.session[:token] = @invitation.token
+        @ctx.session[:token] = invitation.token
         @ctx.session[:permitted] = true
 
-        :'user/register', {}
+        :'user/register', {:invitation => invitation}
     end
 end

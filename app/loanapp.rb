@@ -70,12 +70,12 @@ class LoanApp < Sinatra::Base
         LoansViewController.view(:return, self, params)
     end
 
-    get '/user/:usertype/login' do
-        UserViewController.view(:login, self, params)
-    end
-
     get '/user/profile' do
         UserViewController.view(:profile, self)
+    end
+
+    get '/user/:usertype/login' do
+        UserViewController.view(:login, self, params)
     end
 
     get '/loginapp/change' do
@@ -90,16 +90,16 @@ class LoanApp < Sinatra::Base
         LoginAppController.action(:change, self, params)
     end
 
-    post '/user/:usertype/login' do        
-        UserController.action(:login, self, params)
-    end    
-
     post '/user/register' do
         UserController.action(:register, self, params)
     end
 
     patch '/user/logout' do
         UserController.action(:logout, self)
+    end
+
+    post '/user/:usertype/login' do        
+        UserController.action(:login, self, params)
     end
 
     post '/invites/new' do

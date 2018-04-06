@@ -1,5 +1,5 @@
 - @header = "All loanables"
-- @loantypes.each do |type, loanablename, availableCount|
+- loanable_types.each do |type, loanable_name, available_count|
 	div class="loanable-card"
-		a href="/view/#{type}" #{loanablename.capitalize}s
-		span #{availableCount}
+		a href="/loans/#{type}/view" #{loanable_name.capitalize}s
+		span #{available_count}

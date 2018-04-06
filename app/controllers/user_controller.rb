@@ -2,13 +2,13 @@ require_relative 'controller.rb'
 
 class UserController < Controller
 
-    # TODO: in DSL make sure usermgr has association with @usertype
+    # TODO: in DSL make sure usermgr has association with @user_type
     def login
         credentials = params[:login]
 
         @ctx.validate_fields(credentials) || abort_route
 
-        user_id, error = @usermgr.authenticate(@usertype, credentials)
+        user_id, error = @usermgr.authenticate(@user_type, credentials)
         user_id || abort_route do
             flash[:error] = error
         end
@@ -61,9 +61,8 @@ class UserController < Controller
 end
 
 class UserViewController < ViewController
-    #TODO check for @usertype in DSL system
+    #TODO check for @user_type in DSL system
     def login
-        session[:usertype] = @usertype        
         :'user/login', {}
     end
 

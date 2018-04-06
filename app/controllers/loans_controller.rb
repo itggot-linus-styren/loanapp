@@ -12,7 +12,7 @@ class LoansController < Controller
             flash[:error] = 'Sorry, there was an error making the loan.'
         end
 
-        @ctx.redirect "/loans/#{type}/#{URI.encode loan[:responsible]}"
+        @ctx.redirect "/loans/?type=#{loanable_type}&responsible=#{URI.encode loan[:responsible]}"
     end
 
     # TODO: DSL should set @loanable_type
@@ -116,37 +116,39 @@ class LoansViewController < ViewController
             # change from loantypes to loanable_types in slim
             loanable_types = associations.keys.map do |type|
                 name = associations[type].loanable.loanable_name
-                availableCount = @loanmgr.loanable_by_type(type).not_deleted.where.not(:id => Loan.with_active_loans(@loanable).pluck(:loanable_id)).length
-                [type, name, availableCount]
+                available_count = @loanmgr.loanable_by_type(type).not_deleted.where.not(:id => Loan.with_active_loans(@loanable).pluck(:loanable_id)).length
+                [type, name, available_count]
             end
             return :'loan/loanables', {:loanable_types => loanable_types}
         end
-        :'loan/loans', {:loans => loans}
+        :'loan/loans', {:loans => loans, :type => params[:type]}
     end
+
+    # TODO consider setting @type (params[:type]) in DSL
 
     # TOOD: expect DSL to set @loanable_type and @user (optionally?)
     def view(params)
         loanables = @loanable_type.not_deleted.where.not(:id => Loan.with_active_loans(@loanable).pluck(:loanable_id))
-        :'loan/view', {:loanables => loanables, :user => @user}
-    end
+        :'loan/view', {:loanables => loanables, :type => params[:type]}
+    end    
 
     # TODO: expect DSL to set @loanable
     def loan(params)
-        :'loan/loan', {:loanable => @loanable}
+        :'loan/loan', {:type => params[:type]}
     end
 
     # TODO: expect DSL to set @loanable_type and @user
     def new(params)
-        :'loan/new', {:loanable_type => @loanable_type, :user => @user}
+        :'loan/new', {:type => params[:type]}
     end
     
     # TODO: expect DSL to set @loanable and @user
     def edit(params)
-        :'loan/edit', {:loanable => @loanable, :user => @user}
+        :'loan/edit', {:type => params[:type]}
     end
 
     # TODO: expect DSL to set @loan
     def return(params)
-        :'loan/return', {:loan => @loan}
+        :'loan/return', {:type => params[:type]}
     end
 end

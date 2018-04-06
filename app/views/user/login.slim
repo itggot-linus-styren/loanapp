@@ -1,8 +1,7 @@
 div class="whitebg"
-h2 Login as #{@usertype}
-form action="/authentication" method="post"
+h2 Login as #{user_type}
+form action="/user/#{user_type}/login" method="post"
     responsible-input @update-responsible="updateResponsible" :responsible_person="responsible" name="login[username]" label_text="Username"
     div
         input#password name="login[password]" type="password" placeholder="Password"
-        /label for="password" Password
     input type="submit" value="Login"

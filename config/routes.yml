@@ -12,7 +12,6 @@ routes:
     views:
       change:
         permissions: [change]
-        wants: [user]
 
 
   user:
@@ -51,9 +50,9 @@ routes:
         wants: [loanable]
       new:
         permissions: [create]
-        wants: [loanable_type, user]
+        wants: [loanable_type]
       edit:
         permissions: [update]
-        wants: [loanable_type, user]
+        wants: [loanable]
       return:
         wants: [loan]

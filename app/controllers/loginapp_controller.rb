@@ -34,12 +34,7 @@ class LoginAppController < Controller
 end
 
 class LoginAppViewController < ViewController
-    def index
-        :'index', {}
-    end
-
-    # TODO: in DSL system, the @user must be set
     def change
-        :'user/change', {:user => @user}
+        :'user/change', {}
     end
 end

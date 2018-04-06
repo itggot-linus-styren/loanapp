@@ -9,13 +9,8 @@ class Controller
     end
 
     def build_route(*args)
-        # fetch defs from routes.yml
         defs, perms = RouteParser.instance.fetch_defs(self.class.name)
-
-        # merge permissions with params args
         args << perms
-
-        # build defs and set instance variables
         defs.each do |route_def|
             RouteFactory.build(self, route_def, *args) # TODO make sure exceptions are handled
         end

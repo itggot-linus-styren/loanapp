@@ -1,39 +1,20 @@
-- @header = "#{@loanable.loanable_name.capitalize}s"
-- if @has_create_permission
+- @header = "#{loanable_type.loanable_name.capitalize}s"
+- if user
     div
-        /a href="/add/#{@type}" Create a new loanable #{@loanable.loanable_name}
-        a href="/add/#{@type}" class="float"
+        a href="/loans/#{type}/new" class="float"
             i class="fa fa-plus my-float"
 search @on-search="onSearch"
-- @loanables.each do |loanable|
+- loanables.each do |loanable|
     loanable-card[
         @alert-notify="doAlertNotify"
         @alert-error="doAlertError"
         :keyword="keyword"
-        show_context=@show_context
+        show_context=user ? true : false
         id="#{loanable.id}"
-        loanable_type="#{@type}"
-        url="/loan/#{@type}/#{loanable.id}"
+        loanable_type="#{type}"
+        url="/loans/#{type}/#{loanable.id}/loan"
         card_name="#{loanable.name}"
         subtitle1="#{loanable.subtitle1}"
         subtitle2="#{loanable.subtitle2}"
         hidden_label="#{loanable.hidden_label}"
         hidden_content="#{loanable.hidden_content}"]
-/h2 Available #{@loanable.loanable_name}s to loan
-/desktop below
-/div class="tbl-header"
-    table cellpadding="0" cellspacing="0" border="0"
-        thead
-            tr
-                - @loanable.fields.values.each do |field|
-                    th = field.description
-                th
-/div class="tbl-content"
-    table cellpadding="0" cellspacing="0" border="0"
-        tbody
-                - @loanables.each do |loanable|
-                    tr
-                        - loanable.staticAttributes.values.each do |getter|
-                            td = getter.call
-                        td
-                            a href="/loan/#{@type}/#{loanable.id}" Loan
