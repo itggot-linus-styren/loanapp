@@ -1,0 +1,54 @@
+nav
+	div#menu-desktop
+		a href="/loans"
+			i class="icon fa fa-list fa-2x"
+			b See all loanables
+		- if defined? loanable_type
+			a href="/loans/#{type}/view"
+				i class="icon fa fa-hand-paper-o fa-2x"
+				b See available #{loanable_type.loanable_name}s
+			a href="/loans?type=#{type}"
+				i class="icon fa fa-hand-rock-o fa-2x"
+				b See loaned #{loanable_type.loanable_name}s					
+		- if ctx.session[:user_id]
+			a href="/user/profile"
+				i class="icon fa fa-user fa-2x"
+				b Profile
+			a href="/user/logout"
+				i class="icon fa fa-sign-out fa-2x"
+				b Logout
+		- else
+			a href="/user/admin/login"
+				i class="icon fa fa-sign-in fa-2x"
+				b Login admin
+	div#menuToggle
+		input type="checkbox"
+		span
+		span class="smaller"
+		span
+		div#scrim	
+		ul#menu
+			div class="top"
+				div class="item"
+					a href="/loans"
+						li See all loanables
+				- if defined? loanable_type
+					div class="item"
+						a href="/loans/#{type}/view"
+							li See available #{loanable_type.loanable_name}s
+					div class="item"
+						a href="/loans?type=#{type}"
+							li See loaned #{loanable_type.loanable_name}s					
+				- if ctx.session[:user_id]
+					div class="item"
+						a href="/user/profile"
+							li Profile
+			div class="bottom"
+				- if ctx.session[:user_id]
+					div class="item"
+						a href="/user/logout"
+							li Logout
+				- else
+					div class="item"
+						a href="/user/admin/login"
+							li Login admin				

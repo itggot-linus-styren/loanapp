@@ -1,0 +1,10 @@
+div class="whitebg"
+h2 Change app lock password
+form action="/loginapp/change" method="post"
+	div
+		input#old_password name="change[old_password]" type="password" placeholder="Old password"
+	div
+		input#password name="change[password]" type="password" placeholder="Password"
+	div
+		input#confirm_password name="change[confirm_password]" type="password" placeholder="Confirm"
+  	input type="submit" value="Change"

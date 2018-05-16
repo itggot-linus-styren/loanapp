@@ -1,0 +1,61 @@
+routes:
+
+
+  invites:
+    actions:
+      new:
+        permissions: [invite]
+        wants: [user]
+    views:
+      index:
+        wants: [user]
+
+
+  loginapp:
+    views:
+      change:
+        permissions: [change]
+
+
+  user:
+    actions:
+      login:
+        wants: [user_type]
+    views:
+      login:
+        wants: [user_type]
+      profile:
+        wants: [user]   
+        
+                     
+  loans:
+    actions:
+      loan:
+        wants: [loanable]
+      new:
+        permissions: [create]
+        wants: [loanable_type]
+      edit:
+        permissions: [update]
+        wants: [loanable_type, loanable]
+      delete:
+        permissions: [delete]
+        wants: [loanable]
+      return:
+        wants: [loan]
+    views:
+      index:
+        wants: [loanable_type]
+      view:
+        wants: [loanable_type]
+        optional: [user]
+      loan:
+        wants: [loanable]
+      new:
+        permissions: [create]
+        wants: [loanable_type]
+      edit:
+        permissions: [update]
+        wants: [loanable]
+      return:
+        wants: [loan]

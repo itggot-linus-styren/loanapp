@@ -1,0 +1,20 @@
+- @header = "#{loanable_type.loanable_name.capitalize}s"
+- if defined? user
+    div
+        a href="/loans/#{type}/new" class="float"
+            i class="fa fa-plus my-float"
+search @on-search="onSearch"
+- loanables.each do |loanable|
+    loanable-card[
+        @alert-notify="doAlertNotify"
+        @alert-error="doAlertError"
+        :keyword="keyword"
+        show_context=defined?(user)
+        id="#{loanable.id}"
+        loanable_type="#{type}"
+        url="/loans/#{type}/#{loanable.id}/loan"
+        card_name="#{loanable.name}"
+        subtitle1="#{loanable.subtitle1}"
+        subtitle2="#{loanable.subtitle2}"
+        hidden_label="#{loanable.hidden_label}"
+        hidden_content="#{loanable.hidden_content}"]

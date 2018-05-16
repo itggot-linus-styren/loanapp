@@ -1,0 +1,11 @@
+- @header = "Register"
+h2 Register as #{invitation.user_type}
+p Invitation sent by #{invitation.invited_by.username}
+div class="whitebg"
+form action="/user/register" method="post"
+  responsible-input @update-responsible="updateResponsible" :responsiblePerson="responsible" name="register[username]" labelText="Username"
+  div
+    input#password name="register[password]" type="password" placeholder="Password"
+  div
+    input#confirm_password name="register[confirm_password]" type="password" placeholder="Confirm password"
+  input type="submit" value="Register"
