@@ -12,6 +12,6 @@ dirs.each do |dir|
     Dir["app/#{dir}/*.rb"].each {|file| require_relative file }
 end
 
-require_relative 'errors.rb'
-require_relative 'utils.rb'
-require_relative 'loanapp.rb'
+require_relative 'app/errors.rb'
+require_relative 'app/utils.rb'
+require_relative 'app/loanapp.rb'

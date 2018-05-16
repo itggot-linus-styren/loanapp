@@ -1,6 +1,6 @@
 div class="whitebg"
 h2 Make loan of "#{loanable.name}"
-form action="/loans/#{type}/loan" method="post"   
+form action="/loans/#{type}/#{loanable.id}/loan" method="post"   
     responsible-input @update-responsible="updateResponsible" :responsible_person="responsible" name="loan[responsible]"
     div
         input#purpose name="loan[purpose]" type="text" placeholder="Purpose"

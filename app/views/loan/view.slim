@@ -1,5 +1,5 @@
 - @header = "#{loanable_type.loanable_name.capitalize}s"
-- if user
+- if defined? user
     div
         a href="/loans/#{type}/new" class="float"
             i class="fa fa-plus my-float"
@@ -9,7 +9,7 @@ search @on-search="onSearch"
         @alert-notify="doAlertNotify"
         @alert-error="doAlertError"
         :keyword="keyword"
-        show_context=user ? true : false
+        show_context=defined?(user)
         id="#{loanable.id}"
         loanable_type="#{type}"
         url="/loans/#{type}/#{loanable.id}/loan"

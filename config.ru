@@ -1,4 +1,5 @@
 require_relative 'imports.rb'
+require_relative 'dsl/route_parser.rb'
 
 # create managers
 loanmgr = LoanManager.new
@@ -21,5 +22,7 @@ unless Applock.first
     applock = Applock.new({:encrypted_password => encrypted_password})
     applock.save
 end
+
+RouteParser.instance.load("config/routes.yml")
 
 run LoanApp

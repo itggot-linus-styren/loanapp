@@ -20,30 +20,32 @@ class InvitesViewController < ViewController
         token = params[:token]
 
         invitation = Invitation.find_by_token(token) || abort_route do
-            flash[:error] = "Invitation with token \"#{token}\" does not exist."
-        end
-        
-        invitation.invited_by == @user || abort_route do
-            flash[:error] = "This invitation was not created by you."
+            "Invitation with token \"#{token}\" does not exist."
         end
 
-        :'user/invited', {:invitation_url => "/invites/#{invitation.token}/claim"}
+        puts @user.inspect
+        
+        invitation.invited_by == @user || abort_route do
+            "This invitation was not created by you."
+        end
+
+        return :'user/invited', {:invitation_url => "/invites/#{invitation.token}/claim"}
     end
 
     def new
-        :'user/invite', {}
+        return :'user/invite', {}
     end
 
     def claim(params)
         token = params[:token]
 
         invitation = Invitation.claimable.where(:token => token).first || abort_route do
-            flash[:error] = "Invitation with token \"#{token}\" does not exist - it has expired, is invalid or has already been claimed."
+            "Invitation with token \"#{token}\" does not exist - it has expired, is invalid or has already been claimed."
         end
 
         @ctx.session[:token] = invitation.token
         @ctx.session[:permitted] = true
 
-        :'user/register', {:invitation => invitation}
+        return :'user/register', {:invitation => invitation}
     end
 end

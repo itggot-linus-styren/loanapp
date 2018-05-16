@@ -6,6 +6,9 @@ routes:
       new:
         permissions: [invite]
         wants: [user]
+    views:
+      index:
+        wants: [user]
 
 
   loginapp:
@@ -42,7 +45,7 @@ routes:
         wants: [loan]
     views:
       index:
-        wants: [user]
+        wants: [loanable_type]
       view:
         wants: [loanable_type]
         optional: [user]

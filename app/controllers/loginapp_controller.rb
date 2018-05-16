@@ -18,11 +18,11 @@ class LoginAppController < Controller
 
         encrypted_password = BCrypt::Password.new(Applock.first.encrypted_password)
         encrypted_password == credentials[:old_password] || abort_route do
-            @ctx.flash[:error] = "The specified old password is incorrect."
+            "The specified old password is incorrect."
         end
 
-        credentials[:password] != credentials[:confirm_password] || abort_route do
-            @ctx.flash[:error] = "The passwords does not match!"
+        credentials[:password] == credentials[:confirm_password] || abort_route do
+            "The passwords does not match!"
         end
 
         encrypted_password = BCrypt::Password.create(credentials[:password])
@@ -35,6 +35,6 @@ end
 
 class LoginAppViewController < ViewController
     def change
-        :'user/change', {}
+        return :'user/change', {}
     end
 end

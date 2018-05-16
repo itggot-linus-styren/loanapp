@@ -4,6 +4,6 @@ div class="banner"
 form action="/invites/new" method="post"    
     - usermgr.associations.keys.each_with_index do |usertype, index|
         div class="item"
-            input id="#{usertype}" name="usertype" type="radio" value="#{usertype}" checked=(index == 0 ? 'checked':false)
+            input id="#{usertype}" name="invitation[user_type]" type="radio" value="#{usertype}" checked=(index == 0 ? 'checked':false)
             label for="#{usertype}" #{usertype.capitalize}
     input type="submit" value="Create"

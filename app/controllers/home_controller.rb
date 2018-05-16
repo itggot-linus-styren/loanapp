@@ -13,6 +13,6 @@ end
 
 class HomeViewController < ViewController
     def index
-        :'index', {}
+        return :'index', {}, false
     end
 end

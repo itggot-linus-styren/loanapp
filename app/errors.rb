@@ -24,3 +24,12 @@ class InvalidSubclassExtension < StandardError
         @message = "Subclass has not implemented method \"#{method}\""
     end
 end
+
+class InvalidControllerType < StandardError
+    
+    attr_accessor :message
+    
+    def initialize(method)
+        @message = "Controller of type \"#{method}\" is unknown"
+    end
+end
