@@ -10,20 +10,12 @@ class LoanApp < Sinatra::Base
     register Sinatra::ActiveRecordExtension
 
     attr_accessor :locals
-
-    #before do
-        # fetch defs from routes.yml
-
-        # RouteFactory.build(HomeController, :)
-
-        # Consider adding def logic to controller super class
-    #end
-       
-    #before do
-    #    if !['loginapp', 'invite', nil].include?(request.path_info.split('/')[1]) && !session[:permitted]
-    #        halt 403, slim(:'forbidden', :layout => false)
-    #    end
-    #end
+    
+    before do
+        if !['loginapp', 'invite', nil].include?(request.path_info.split('/')[1]) && !session[:permitted]
+            halt 403, slim(:'forbidden', :layout => false)
+        end
+    end
 
     not_found do
         status 404
