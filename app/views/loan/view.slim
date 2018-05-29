@@ -3,7 +3,7 @@
     div
         a href="/loans/#{type}/new" class="float"
             i class="fa fa-plus my-float"
-search @on-search="onSearch"
+/search @on-search="onSearch"
 - loanables.each do |loanable|
     loanable-card[
         @alert-notify="doAlertNotify"
@@ -18,3 +18,21 @@ search @on-search="onSearch"
         subtitle2="#{loanable.subtitle2}"
         hidden_label="#{loanable.hidden_label}"
         hidden_content="#{loanable.hidden_content}"]
+/div class="tbl-header"
+    table cellpadding="0" cellspacing="0" border="0"
+        thead
+            tr
+                - loanable_type.fields.values.each do |field|
+                    th = field.description
+                th
+div class="tbl-content"
+    table cellpadding="0" cellspacing="0" border="0"
+        tbody
+                - loanables.each do |loanable|
+                    tr
+                        - loanable.staticAttributes.values.zip(loanable_type.fields.values).each do |getter, field|
+                            td
+                                h2 = field.description 
+                                p = getter.call
+                        td
+                            a href="/loans/#{type}/#{loanable.id}/loan" Loan        

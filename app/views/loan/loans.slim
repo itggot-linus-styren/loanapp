@@ -1,5 +1,5 @@
 - @header = "Loaned #{loanable_type.loanable_name}s"
-search @on-search="onSearch"
+/search @on-search="onSearch"
 - loans.each do |loan|
     loaned-card[
         :keyword="keyword"
@@ -21,3 +21,37 @@ div class="hidden"
             purpose="#{loan.purpose}"
             loaned_at="#{loan.loaned_at}"
             loaned_count="#{loan.loanable.loaned_count}"]
+/div class="tbl-header"
+    table cellpadding="0" cellspacing="0" border="0"
+        thead
+            tr
+                - loanable_type.fields.values.each do |field|
+                    th = field.description
+                th responsible
+                th purpose
+                th location
+                th loaned since
+                th
+div class="tbl-content"
+    table cellpadding="0" cellspacing="0" border="0"
+        tbody
+            - loans.each do |loan|
+                tr
+                    - loan.loanable.staticAttributes.values.zip(loanable_type.fields.values).each do |getter, field|
+                        td
+                            h2 = field.description
+                            p = getter.call
+                    td
+                        h2 responsible
+                        a href="/loans?type=#{type}&responsible=#{loan.responsible}" = loan.responsible
+                    td
+                        h2 purpose
+                        p = loan.purpose
+                    td
+                        h2 location
+                        p = loan.location
+                    td
+                        h2 loaned since
+                        p = loan.loaned_at
+                    td
+                        a href="/loans/#{type}/#{loan.id}/return" Return            
