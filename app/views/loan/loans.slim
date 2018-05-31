@@ -21,17 +21,6 @@ div class="hidden"
             purpose="#{loan.purpose}"
             loaned_at="#{loan.loaned_at}"
             loaned_count="#{loan.loanable.loaned_count}"]
-/div class="tbl-header"
-    table cellpadding="0" cellspacing="0" border="0"
-        thead
-            tr
-                - loanable_type.fields.values.each do |field|
-                    th = field.description
-                th responsible
-                th purpose
-                th location
-                th loaned since
-                th
 div class="tbl-content"
     table cellpadding="0" cellspacing="0" border="0"
         tbody
