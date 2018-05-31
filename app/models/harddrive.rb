@@ -8,9 +8,9 @@ class Harddrive < ActiveRecord::Base
 
     @fields = {
         "name" => Field.new(:text, "HDD name"),
+        "status" => Field.new(:text, "Status"),
         "brand" => Field.new(:text, "Brand"),
         "disksize" => Field.new(:number, "Disksize", ["TB", "GB"]),
-        "status" => Field.new(:text, "Status")
     }
 
     def self.format_field(field, data, option)
@@ -21,21 +21,23 @@ class Harddrive < ActiveRecord::Base
         formatted_data
     end
 
-    def set_getters_and_setters       
+    def set_getters_and_setters
+        @statusValues = ["ok", "unclear", "broken"]
+
         @staticAttributes = {
             "name" => ->{"#{self.name}"},
+            "status" => ->{(["#{self.status}"] + @statusValues).uniq},
             "brand" => ->{"#{self.brand}"},
             "disksize" => ->{"#{self.disksize} TB"},
-            "status" => ->{"#{self.status}"}
         }
 
         @updateableAttributes = {"status" => ->(value){self.status = value}}
 
         @values = {
             "name" => Datafield.new(->{self.name}),
+            "status" => Datafield.new(->{self.status}),
             "brand" => Datafield.new(->{self.brand}),
             "disksize" => Datafield.new(->{self.disksize.to_f * 1000.0}, "GB"),
-            "status" => Datafield.new(->{self.status})
         }
         
         # for mobile

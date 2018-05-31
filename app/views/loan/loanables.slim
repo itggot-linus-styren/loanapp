@@ -1,5 +1,8 @@
-- @header = "All loanables"
-- loanable_types.each do |type, loanable_name, available_count|
-	div class="loanable-card"
-		a href="/loans/#{type}/view" #{loanable_name.capitalize}s
-		span #{available_count}
+- @header = "Loan categories"
+div#loanable-container
+	- loanable_types.each do |type, loanable_name, available_count|
+		div class="loanable-card"
+			img src="/img/loanable_#{type}.jpg"
+			div class="loanable-card-label"
+				a href="/loans/#{type}/view" #{loanable_name.capitalize}s
+				span amount #{available_count}

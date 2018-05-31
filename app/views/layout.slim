@@ -3,7 +3,12 @@
 body
 	== partial :'partials/vuetemplates'
 	div#app
-		== partial :'partials/header'
+		div#mobile-header
+			h1
+				span.red> •
+				| APTIV
+				span.red •
 		== partial :'partials/navbar'
+		== partial :'partials/header'
 		== partial :'partials/main' { yield }
 == partial :'partials/scripts'		

@@ -1,26 +1,45 @@
 nav
 	div#menu-desktop
-		a href="/loans"
-			i class="icon fa fa-list fa-2x"
-			b See all loanables
-		- if defined? loanable_type
-			a href="/loans/#{type}/view"
-				i class="icon fa fa-hand-paper-o fa-2x"
-				b See available #{loanable_type.loanable_name}s
-			a href="/loans?type=#{type}"
-				i class="icon fa fa-hand-rock-o fa-2x"
-				b See loaned #{loanable_type.loanable_name}s					
-		- if ctx.session[:user_id]
-			a href="/user/profile"
-				i class="icon fa fa-user fa-2x"
-				b Profile
-			a href="/user/logout"
-				i class="icon fa fa-sign-out fa-2x"
-				b Logout
-		- else
-			a href="/user/admin/login"
-				i class="icon fa fa-sign-in fa-2x"
-				b Login admin
+		div#menu-header
+			h1
+				span.red> •
+				| APTIV
+				span.red •
+		.search
+			input#search-bar name="" placeholder=("Search loan category") type="text" value="" /
+			label for="search-bar"
+				i.fa.fa-search aria-hidden="true"
+			button.clear-icon onclick=("document.getElementById('search-bar').value = ''") 
+				i.fa.fa-times aria-hidden="true"
+		.sort-by
+			h1 Sort by
+			.categories
+				.category
+					.category-checkbox
+						input#c0 name="" type="checkbox" value="" /
+						label for="c0" 
+					label.category-name for="c0"  Name
+				.category
+					.category-checkbox
+						input#c1 name="" type="checkbox" value="" /
+						label for="c1" 
+					label.category-name for="c1"  Amount
+		.links
+			a href="/loans" /
+			h2 See all loanables
+			- if defined? loanable_type
+				a href="/loans/#{type}/view" /
+				h2 See available #{loanable_type.loanable_name}s
+				a href="/loans?type=#{type}" /
+				h2 See loaned #{loanable_type.loanable_name}s
+			- if ctx.session[:user_id]
+				a href="/user/profile" /
+				h2 Profile
+		.login
+			- if ctx.session[:user_id]
+				a.button href="/user/logout" logout
+			- else
+				a.button href="/user/admin/login" login as admin
 	div#menuToggle
 		input type="checkbox"
 		span
@@ -38,7 +57,7 @@ nav
 							li See available #{loanable_type.loanable_name}s
 					div class="item"
 						a href="/loans?type=#{type}"
-							li See loaned #{loanable_type.loanable_name}s					
+							li See loaned #{loanable_type.loanable_name}s
 				- if ctx.session[:user_id]
 					div class="item"
 						a href="/user/profile"
