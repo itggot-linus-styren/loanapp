@@ -28,7 +28,7 @@ div class="tbl-content"
                                 h2 = field.description 
                                 - value = getter.call
                                 - if value.kind_of?(Array)
-                                    select
+                                    select.multiple
                                         - value.each_with_index do |value_option, index|
                                             - if index == 0
                                                 option selected="" = value_option
