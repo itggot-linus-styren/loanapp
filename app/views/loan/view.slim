@@ -18,16 +18,6 @@
         subtitle2="#{loanable.subtitle2}"
         hidden_label="#{loanable.hidden_label}"
         hidden_content="#{loanable.hidden_content}"]
-<<<<<<< HEAD
-=======
-/div class="tbl-header"
-    table cellpadding="0" cellspacing="0" border="0"
-        thead
-            tr
-                - loanable_type.fields.values.each do |field|
-                    th = field.description
-                th
->>>>>>> ebd03d8f5a2fd4d2e727644dc2541b315427bd3b
 div class="tbl-content"
     table cellpadding="0" cellspacing="0" border="0"
         tbody
@@ -36,7 +26,6 @@ div class="tbl-content"
                         - loanable.staticAttributes.values.zip(loanable_type.fields.values).each do |getter, field|
                             td
                                 h2 = field.description 
-<<<<<<< HEAD
                                 - value = getter.call
                                 - if value.kind_of?(Array)
                                     select
@@ -49,8 +38,3 @@ div class="tbl-content"
                                     p = value
                         td
                             a.button.margin href="/loans/#{type}/#{loanable.id}/loan" Loan        
-=======
-                                p = getter.call
-                        td
-                            a href="/loans/#{type}/#{loanable.id}/loan" Loan        
->>>>>>> ebd03d8f5a2fd4d2e727644dc2541b315427bd3b
