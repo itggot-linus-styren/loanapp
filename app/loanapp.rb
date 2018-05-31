@@ -114,7 +114,7 @@ class LoanApp < Sinatra::Base
         LoansController.action(:edit, self, params).call
     end
 
-    post '/loans/:type/:id/delete' do
+    get '/loans/:type/:id/delete' do
         LoansController.action(:delete, self, params).call
     end
 

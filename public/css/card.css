@@ -260,7 +260,7 @@ a.info:hover {
 .dropdown-content {
     display: none;
     position: relative;
-    margin-top: 60px;
+    margin-top: -45px;
     background-color: #f9f9f9;
     min-width: 160px;
     overflow: auto;

@@ -28,7 +28,7 @@ template#loanableCard
                 h3 ref="hidden_label" {{ hidden_label }}
                 p ref="hidden_content" {{ hidden_content }}
             div
-                a :href="url" Loan 
+                a :href="url" Loan                
 template#loanedCard
     div class="card" v-if="card_name.toLowerCase().includes(keyword) || loaned_by.toLowerCase().includes(keyword)"
         input type="checkbox"

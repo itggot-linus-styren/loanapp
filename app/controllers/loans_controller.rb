@@ -34,7 +34,7 @@ class LoansController < Controller
         end
 
         @ctx.flash[:notify] = "The #{@loanable_type.loanable_name} \"#{name}\" was successfully added to the database."
-        @ctx.redirect '/'
+        @ctx.redirect_to_back_or_default
     end
     
     def edit(params)
@@ -43,7 +43,7 @@ class LoansController < Controller
 
         @ctx.validate_fields(creation) || abort_route
 
-        !@loanmgr.is_loaned?(@loanable_type, @loanable) || abort_route do
+        !@loanmgr.is_loaned?(@type, @loanable) || abort_route do
             "#{@loanable.name.capitalize} is loaned and can't be updated."
         end
 
@@ -51,12 +51,12 @@ class LoansController < Controller
             "Sorry, there was an error creating the #{@loanable_type.loanable_name}."
         end
 
-        @ctx.flash[:notify] = "The #{loanable_name} \"#{name}\" was successfully edited."
-        @ctx.redirect '/'
+        @ctx.flash[:notify] = "The #{@loanable_type.loanable_name} \"#{name}\" was successfully edited."
+        @ctx.redirect_to_back_or_default
     end
 
     def delete(params)
-        if @loanmgr.is_loaned?(type, @loanable)
+        if @loanmgr.is_loaned?(@type, @loanable)
             @ctx.json :successful => 'false', :error => "#{@loanable.name.capitalize} is loaned and can't be deleted."
         end
 
@@ -84,7 +84,7 @@ class LoansController < Controller
         end
         
         @ctx.flash[:notify] = "The #{loanable_name} \"#{name}\" was successfully returned."
-        @ctx.redirect '/'
+        @ctx.redirect "/loans/#{@type}/view"
     end
 
     private

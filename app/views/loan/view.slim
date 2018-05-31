@@ -21,20 +21,34 @@
 div class="tbl-content"
     table cellpadding="0" cellspacing="0" border="0"
         tbody
-                - loanables.each do |loanable|
-                    tr
-                        - loanable.staticAttributes.values.zip(loanable_type.fields.values).each do |getter, field|
+            - loanables.each do |loanable|
+                tr[is="loanable-tablerow"
+                    @alert-notify="doAlertNotify"
+                    @alert-error="doAlertError"
+                    :keyword="keyword"
+                    loanable_name="#{loanable.name}"
+                    id="#{loanable.id}"
+                    loanable_type="#{type}"]
+                        template slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted"
+                            - loanable.staticAttributes.values.zip(loanable_type.fields.values).each do |getter, field|
+                                td
+                                    h2 = field.description 
+                                    - value = getter.call
+                                    - if value.kind_of?(Array)
+                                        select.multiple
+                                            - value.each_with_index do |value_option, index|
+                                                - if index == 0
+                                                    option selected="" = value_option
+                                                - else
+                                                    option = value_option
+                                    - else
+                                        p = value
+                            - if defined?(user)
+                                td.context
+                                    div class="dropdown" @click.stop="loanable_scope.showDropdown"
+                                        div id="dropdown-menu" class="dropdown-content" v-click-outside="loanable_scope.hideDropdown" :class="{ show: loanable_scope.is_shown }"
+                                            a href="#_" @click="loanable_scope.deleteLoanable" Delete
+                                            a :href="loanable_scope.update_url" Update
+                                        i class="fa fa-ellipsis-v info"
                             td
-                                h2 = field.description 
-                                - value = getter.call
-                                - if value.kind_of?(Array)
-                                    select.multiple
-                                        - value.each_with_index do |value_option, index|
-                                            - if index == 0
-                                                option selected="" = value_option
-                                            - else
-                                                option = value_option
-                                - else
-                                    p = value
-                        td
-                            a.button.margin href="/loans/#{type}/#{loanable.id}/loan" Loan        
+                                    a.button.margin href="/loans/#{type}/#{loanable.id}/loan" Loan

@@ -7,7 +7,7 @@ gem 'sinatra'
 gem 'sinatra-flash'
 gem 'activerecord'
 gem 'sinatra-activerecord'
-gem 'sinatra-contrib', require: false
+gem 'sinatra-contrib'
 gem 'bcrypt'
 gem 'rake'
 

@@ -85,6 +85,104 @@ Vue.component(`copiable-input`, {
     }
 });
 
+Vue.directive('click-outside', {
+    bind: function(el, binding, vNode) {
+        // Provided expression must evaluate to a function.
+        if (typeof binding.value !== 'function') {
+            const compName = vNode.context.name
+        let warn = `[Vue-click-outside:] provided expression '${binding.expression}' is not a function, but has to be`
+        if (compName) { warn += `Found in component '${compName}'` }
+        
+        console.warn(warn);
+        }
+        // Define Handler and cache it on the element
+        const bubble = binding.modifiers.bubble;
+        const handler = (e) => {
+        if (bubble || (!el.contains(e.target) && el !== e.target)) {
+            binding.value(e);
+        }
+        }
+        el.__vueClickOutside__ = handler;
+
+        // add Event Listeners
+        document.addEventListener('click', handler);
+            },
+
+    unbind: function(el, binding) {
+        // Remove Event Listeners
+        document.removeEventListener('click', el.__vueClickOutside__);
+        el.__vueClickOutside__ = null;
+
+    }
+});
+
+Vue.component(`loanable-tablerow`, {
+    props: {
+        id: {
+            type: String
+        },
+        loanable_name: {
+            type: String
+        },
+        loanable_type: {
+            type: String
+        },
+        keyword: {
+            type: String,
+            default: ""
+        }
+    },
+    data() {
+        return {
+            is_shown: false,
+            deleted: false,
+            update_url: ""
+        }
+    },
+    methods: {
+        showDropdown() {
+            this.is_shown = !this.is_shown;        
+        },
+        hideDropdown() {
+            this.is_shown = false;            
+        },
+        deleteLoanable() {
+            this.$http.get(`/loans/${this.loanable_type}/${this.id}/delete`)
+            .then(response => response.json())
+            .then(json => {
+                if (json["successful"] === "true") {
+                    this.onDeleted();
+                } else {
+                    let error = json["error"] ? json["error"] : `${this.loanable_name} could not be deleted.`;
+                    this.failedDeleted(error);
+                }
+            }, response => {
+                this.failedDeleted(`${this.loanable_name} could not be deleted.`);
+            });            
+        },
+        onDeleted() {
+            this.$emit(`alert-notify`, `${this.loanable_name} was successfully deleted.`);
+            this.deleted = true;
+        },
+        failedDeleted(error) {
+            this.$emit(`alert-error`, error);
+        }
+    },
+    created() {
+        this.update_url = `/loans/${this.loanable_type}/${this.id}/edit`
+    },
+    render: function(h) {
+        return h("tr", this.$scopedSlots.default({loanable_scope: {
+            deleted: this.deleted,
+            is_shown: this.is_shown,
+            update_url: this.update_url,
+            showDropdown: this.showDropdown,
+            hideDropdown: this.hideDropdown,
+            deleteLoanable: this.deleteLoanable
+        }}));
+    }
+})
+
 Vue.component(`loanable-card`, {
     props: {
         show_context: {
@@ -127,49 +225,7 @@ Vue.component(`loanable-card`, {
         }
     },
     template: '#loanableCard',
-    directives: {
-      'click-outside': {
-        bind: function(el, binding, vNode) {
-          // Provided expression must evaluate to a function.
-          if (typeof binding.value !== 'function') {
-              const compName = vNode.context.name
-            let warn = `[Vue-click-outside:] provided expression '${binding.expression}' is not a function, but has to be`
-            if (compName) { warn += `Found in component '${compName}'` }
-            
-            console.warn(warn);
-          }
-          // Define Handler and cache it on the element
-          const bubble = binding.modifiers.bubble;
-          const handler = (e) => {
-            if (bubble || (!el.contains(e.target) && el !== e.target)) {
-                binding.value(e);
-            }
-          }
-          el.__vueClickOutside__ = handler;
-  
-          // add Event Listeners
-          document.addEventListener('click', handler);
-              },
-        
-        unbind: function(el, binding) {
-          // Remove Event Listeners
-          document.removeEventListener('click', el.__vueClickOutside__);
-          el.__vueClickOutside__ = null;
-  
-        }
-      }
-    },
     methods: {
-        toggleCard() {
-            /*let radio = $(this.$refs.radio);
-            if ($('input[name=card]:checked').is(radio)) {
-                if (radio.prop('checked')) {
-                    radio.prop('checked', false);
-                } else {
-                    radio.prop('checked', true);
-                }
-            }*/
-        },
         showDropdown() {
             this.is_shown = !this.is_shown;        
         },
@@ -177,7 +233,7 @@ Vue.component(`loanable-card`, {
             this.is_shown = false;            
         },
         deleteLoanable() {
-            this.$http.get(`/delete/${this.loanable_type}/${this.id}`)
+            this.$http.post(`/loans/${this.loanable_type}/${this.id}/delete`)
             .then(response => response.json())
             .then(json => {
                 if (json["successful"] === "true") {
@@ -199,7 +255,7 @@ Vue.component(`loanable-card`, {
         }
     },
     created() {
-        this.update_url = `/update/${this.loanable_type}/${this.id}`
+        this.update_url = `/loans/${this.loanable_type}/${this.id}/edit`
     }
 });
 

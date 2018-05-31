@@ -645,6 +645,15 @@ input[type="radio"] {
 		color: #FF8913;
 	}
 
+	td.context {
+		position: relative;
+	}
+
+	td.context > div {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+
 	.hidden-content {
 		height: auto !important;
 		width: auto !important;
