@@ -275,6 +275,10 @@ a.info:hover {
     display: block;
 }
 
+.dropdown-content a.delete {
+    color: #f72525;
+}
+
 .dropdown a:hover {background-color: #f1f1f1}
 
 .show {

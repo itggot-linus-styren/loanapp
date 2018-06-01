@@ -31,12 +31,13 @@ div class="tbl-content"
                             h2 = field.description
                             - value = getter.call
                             - if value.kind_of?(Array)
-                                select.multiple
-                                    - value.each_with_index do |value_option, index|
-                                        - if index == 0
-                                            option selected="" = value_option
-                                        - else
-                                            option = value_option
+                                div.custom-select
+                                            select
+                                                - value.each_with_index do |value_option, index|
+                                                    - if index == 0
+                                                        option value="#{index}" selected="" = value_option
+                                                    - else
+                                                        option value="#{index}" = value_option
                             - else
                                 p = value
                     td
