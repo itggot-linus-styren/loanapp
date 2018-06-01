@@ -653,6 +653,55 @@ a.button.margin {
 		width: calc(100% - 2rem);
 		margin-top: 1rem;
 	}
+
+	.sort-by {
+		background-color: rgb(41, 41, 41);
+		padding: 0.8rem;
+		width: 90%;
+		display: flex;
+		align-self: center;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 0.5rem;
+		border-radius: 3px;
+	}
+
+	.sort-by > h2 {
+		color: white;
+		font-weight: 600;
+		font-size: 1rem;
+		text-transform: uppercase;
+	}
+
+	.sort-by .select-selected {
+		background-color: white;
+		color: #FF8913 !important;
+	}
+	/*style the arrow inside the select element:*/
+	.sort-by .select-selected:after {		
+		border-color: #FF8913 transparent transparent transparent;
+	}
+	/*point the arrow upwards when the select box is open (active):*/
+	.sort-by .select-selected.select-arrow-active:after {
+		border-color: transparent transparent #FF8913 transparent;
+	}
+	/*style the items (options), including the selected item:*/
+	.sort-by .select-items div, .sort-by .select-selected {
+		color: white;
+	}
+	/*style items (options):*/
+	.sort-by .select-items {
+		border-radius: 3px;
+		background-color: #FF8913 !important;
+	}
+
+	.sort-by .select-items div:hover {
+		background-color: rgb(211, 114, 17);
+	}
+
+	.sort-by .same-as-selected {
+		background-color: #FF8913;
+	}
 }
 
 /* desktop */

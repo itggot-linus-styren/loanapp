@@ -1,5 +1,11 @@
 - @header = "Loaned #{loanable_type.loanable_name}s"
 /search @on-search="onSearch"
+div.sort-by
+    h2 sort by
+    .custom-select
+        select
+            option value="0" selected="" name
+            option value="1" amount
 - loans.each do |loan|
     /loaned-card[
         :keyword="keyword"

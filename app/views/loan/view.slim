@@ -3,6 +3,12 @@
     div
         a href="/loans/#{type}/new" class="float"
             i class="fa fa-plus my-float"
+div.sort-by
+    h2 sort by
+    .custom-select
+        select
+            option value="0" selected="" name
+            option value="1" amount            
 /search @on-search="onSearch"
 - loanables.each do |loanable|
     /loanable-card[
