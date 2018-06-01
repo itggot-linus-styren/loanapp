@@ -41,10 +41,8 @@ class Harddrive < ActiveRecord::Base
         }
         
         # for mobile
-        @subtitle1 = ->{"#{self.brand}"} 
-        @subtitle2 = ->{"status: #{self.status}"}
-        @hidden_label = "Disksize"
-        @hidden_content = ->{"#{self.disksize}TB"}
+        @subtitle1 = ->{"#{self.disksize}TB"} 
+        @subtitle2 = ->{"#{self.brand}"}
     end
 
 end

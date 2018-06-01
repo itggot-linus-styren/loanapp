@@ -5,7 +5,7 @@
             i class="fa fa-plus my-float"
 /search @on-search="onSearch"
 - loanables.each do |loanable|
-    loanable-card[
+    /loanable-card[
         @alert-notify="doAlertNotify"
         @alert-error="doAlertError"
         :keyword="keyword"
@@ -18,17 +18,51 @@
         subtitle2="#{loanable.subtitle2}"
         hidden_label="#{loanable.hidden_label}"
         hidden_content="#{loanable.hidden_content}"]
+    div[class="loanable-card"
+        is="loanable-component"
+        @alert-notify="doAlertNotify"
+        @alert-error="doAlertError"                    
+        :keyword="keyword"
+        loanable_name="#{loanable.name}"
+        id="#{loanable.id}"
+        loanable_type="#{type}"
+        is_card=true]
+        template#loanableCard slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted"            
+            div class="card"
+                div class="card-content" @click.stop="loanable_scope.showCard"
+                    div.left
+                        h2 = loanable.name
+                        div.custom-select
+                            select
+                                - loanable.staticAttributes["status"].call.each_with_index do |value_option, index|
+                                    - if index == 0
+                                        option value="#{index}" selected="" = value_option
+                                    - else
+                                        option value="#{index}" = value_option
+                    div.right
+                        - if defined?(user)
+                            div.context
+                                div class="dropdown" @click.stop="loanable_scope.showDropdown"
+                                    div id="dropdown-menu" class="dropdown-content" v-click-outside="loanable_scope.hideDropdown" :class="{ show: loanable_scope.is_shown }"
+                                        a.delete href="#_" @click="loanable_scope.deleteLoanable" Delete
+                                        a href="/loans/#{type}/#{loanable.id}/edit" Update
+                                    i class="fa fa-ellipsis-v info"
+                        p ref="subtitle1" = loanable.subtitle1
+                        p ref="subtitle2" = loanable.subtitle2                            
+                div.card-hidden :class="{ card_shown: loanable_scope.is_card_shown }"
+                    a.button v-click-outside="loanable_scope.hideCard" href="/loans/#{type}/#{loanable.id}/loan" Loan
 div class="tbl-content"
     table cellpadding="0" cellspacing="0" border="0"
         tbody
             - loanables.each do |loanable|
-                tr[is="loanable-tablerow"
+                tr[is="loanable-component"
                     @alert-notify="doAlertNotify"
-                    @alert-error="doAlertError"
+                    @alert-error="doAlertError"                    
                     :keyword="keyword"
                     loanable_name="#{loanable.name}"
                     id="#{loanable.id}"
-                    loanable_type="#{type}"]
+                    loanable_type="#{type}"
+                    is_card=false]
                         template slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted"
                             - loanable.staticAttributes.values.zip(loanable_type.fields.values).each do |getter, field|
                                 td
@@ -49,7 +83,7 @@ div class="tbl-content"
                                     div class="dropdown" @click.stop="loanable_scope.showDropdown"
                                         div id="dropdown-menu" class="dropdown-content" v-click-outside="loanable_scope.hideDropdown" :class="{ show: loanable_scope.is_shown }"
                                             a.delete href="#_" @click="loanable_scope.deleteLoanable" Delete
-                                            a :href="loanable_scope.update_url" Update
+                                            a href="/loans/#{type}/#{loanable.id}/edit" Update
                                         i class="fa fa-ellipsis-v info"
                             td
                                     a.button.margin href="/loans/#{type}/#{loanable.id}/loan" Loan

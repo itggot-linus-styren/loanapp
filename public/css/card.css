@@ -15,12 +15,18 @@ div class="card-hidden"
         p {{ hidden_content }}
     a href="#" @click="onClick" Loan 
 */
+
+.loanable-card {
+    width: 90%;
+}
+
 .card {
     background: white;
     width: 100%;
     position: relative;
     margin-top: 1rem;
-    margin-bottom: 1rem;    
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .card-hidden {
@@ -30,13 +36,30 @@ div class="card-hidden"
     right: 0;
     bottom: 0;
     z-index: -1;
-    background: #E5E5E5;
+    background: #FF8913;
     display: flex;
     width: 100%;
     opacity: 0;
     transition: all 0.3s ease;
+    justify-content: center;
+    align-items: center;
 }
 
+.card_shown {
+    opacity: 1;
+    z-index: 10;
+}
+
+a.button {
+    background-color: white;
+    color: #FF8913;
+}
+
+a.button.margin {
+    margin: 0 25%;
+}
+
+/*
 .hidden-content {
     width: 100%;
     max-width: 480px;
@@ -52,7 +75,9 @@ div class="card-hidden"
     margin: 0;
     color: rgba(0, 0, 0, 0.54);
 }
+*/
 
+/*
 .card-hidden > div:last-of-type {
     display: flex;
     align-items: center;
@@ -72,7 +97,7 @@ div class="card-hidden"
     padding-bottom: 0.5rem;
     margin: 1rem;
     text-decoration: none;    
-}
+}*/
 
 .card-content {
     width: 100%;
@@ -85,12 +110,30 @@ div class="card-hidden"
     transition: margin-bottom 0.3s ease;
 }
 
-.card-content > div {
+.card-content > .left {
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
 }
 
+.context {
+    position: relative;
+    height: 1rem;
+}
+
+.context > div {
+    padding-left: 1rem;
+}
+
+.card-content > .right {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/*
 .card_name {
     width: 100%;
     display: flex;
@@ -145,7 +188,9 @@ div class="card-hidden"
     margin-right: 1rem;
     flex: 0;
 }
+*/
 
+/*
 .card input {
   display: block;
   width: 100%;
@@ -172,12 +217,17 @@ div class="card-hidden"
 .card input:checked ~ .card-content {
     margin-bottom: 6rem;
 }
+*/
 
 a.info {
     position: relative;
     text-decoration: none;
     color: rgba(0, 0, 0, 0.54);
     transition: transform 0.3s ease;
+}
+
+a.info > i {
+    color: #FF8913;
 }
 
 a.info:hover {

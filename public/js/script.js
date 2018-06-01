@@ -85,38 +85,71 @@ Vue.component(`copiable-input`, {
     }
 });
 
+function validate(binding) {
+    if (typeof binding.value !== 'function') {
+      console.warn('[Vue-click-outside:] provided expression', binding.expression, 'is not a function.')
+      return false
+    }
+  
+    return true
+  }
+  
+function isPopup(popupItem, elements) {
+    if (!popupItem || !elements)
+        return false
+
+    for (var i = 0, len = elements.length; i < len; i++) {
+        try {
+            if (popupItem.contains(elements[i])) {
+                return true
+            }
+            if (elements[i].contains(popupItem)) {
+                return false
+            }
+        } catch(e) {
+            return false
+        }
+    }
+
+    return false
+}
+
 Vue.directive('click-outside', {
     bind: function(el, binding, vNode) {
-        // Provided expression must evaluate to a function.
-        if (typeof binding.value !== 'function') {
-            const compName = vNode.context.name
-        let warn = `[Vue-click-outside:] provided expression '${binding.expression}' is not a function, but has to be`
-        if (compName) { warn += `Found in component '${compName}'` }
-        
-        console.warn(warn);
-        }
+        if (!validate(binding)) return
+
         // Define Handler and cache it on the element
-        const bubble = binding.modifiers.bubble;
-        const handler = (e) => {
-        if (bubble || (!el.contains(e.target) && el !== e.target)) {
-            binding.value(e);
+        function handler(e) {
+            if (!vNode.context) return
+
+            // some components may have related popup item, on which we shall prevent the click outside event handler.
+            var elements = e.path || (e.composedPath && e.composedPath())
+            elements && elements.length > 0 && elements.unshift(e.target)            
+        
+            if (el.contains(e.target) || isPopup(vNode.context.popupItem, elements)) return
+
+            el.__vueClickOutside__.callback(e)
         }
-        }
-        el.__vueClickOutside__ = handler;
 
         // add Event Listeners
-        document.addEventListener('click', handler);
-            },
-
+        el.__vueClickOutside__ = {
+            handler: handler,
+            callback: binding.value
+        }
+        document.addEventListener('click', handler)
+    },
+    update: function (el, binding) {
+        if (validate(binding)) el.__vueClickOutside__.callback = binding.value
+    },
     unbind: function(el, binding) {
         // Remove Event Listeners
-        document.removeEventListener('click', el.__vueClickOutside__);
-        el.__vueClickOutside__ = null;
+        document.removeEventListener('click', el.__vueClickOutside__.handler)
+        delete el.__vueClickOutside__
 
     }
 });
 
-Vue.component(`loanable-tablerow`, {
+Vue.component(`loanable-component`, {
     props: {
         id: {
             type: String
@@ -130,21 +163,31 @@ Vue.component(`loanable-tablerow`, {
         keyword: {
             type: String,
             default: ""
+        },
+        is_card: {
+            type: Boolean
         }
     },
     data() {
         return {
             is_shown: false,
             deleted: false,
-            update_url: ""
+            is_card_shown: false
         }
     },
     methods: {
         showDropdown() {
+            this.$eventHub.$emit(`hide-all-dropdowns`);
             this.is_shown = !this.is_shown;        
         },
         hideDropdown() {
-            this.is_shown = false;            
+            this.is_shown = false;      
+        },
+        showCard() {
+            this.is_card_shown = true;
+        },
+        hideCard() {
+            this.is_card_shown = false;
         },
         deleteLoanable() {
             this.$http.get(`/loans/${this.loanable_type}/${this.id}/delete`)
@@ -169,20 +212,27 @@ Vue.component(`loanable-tablerow`, {
         }
     },
     created() {
-        this.update_url = `/loans/${this.loanable_type}/${this.id}/edit`
+        this.$eventHub.$on('hide-all-dropdowns', this.hideDropdown);
+    },    
+    beforeDestroy() {
+        this.$eventHub.$off('hide-all-dropdowns');
     },
     render: function(h) {
-        return h("tr", this.$scopedSlots.default({loanable_scope: {
+        let html_tag = this.is_card ? "div" : "tr";
+        return h(html_tag, this.$scopedSlots.default({loanable_scope: {
             deleted: this.deleted,
             is_shown: this.is_shown,
-            update_url: this.update_url,
+            is_card_shown: this.is_card_shown,
             showDropdown: this.showDropdown,
             hideDropdown: this.hideDropdown,
+            showCard: this.showCard,
+            hideCard: this.hideCard,
             deleteLoanable: this.deleteLoanable
         }}));
     }
-})
+});
 
+/*
 Vue.component(`loanable-card`, {
     props: {
         show_context: {
@@ -227,6 +277,7 @@ Vue.component(`loanable-card`, {
     template: '#loanableCard',
     methods: {
         showDropdown() {
+            this.$eventHub.$emit(`hide-all-dropdowns`);
             this.is_shown = !this.is_shown;        
         },
         hideDropdown() {
@@ -255,30 +306,17 @@ Vue.component(`loanable-card`, {
         }
     },
     created() {
+        this.$eventHub.$on('hide-all-dropdowns', this.hideDropdown);
         this.update_url = `/loans/${this.loanable_type}/${this.id}/edit`
+    },
+    beforeDestroy() {
+        this.$eventHub.$off('hide-all-dropdowns');
     }
 });
+*/
 
-Vue.component(`loaned-card`, {
+Vue.component(`loaned-component`, {
     props: {
-        id: {
-            type: String
-        },
-        url: {
-            type: String
-        },
-        card_name: {
-            type: String
-        },
-        subtitle1: {
-            type: String
-        },
-        subtitle2: {
-            type: String
-        },
-        loaned_by: {
-            type: String
-        },
         keyword: {
             type: String,
             default: ""
@@ -286,24 +324,24 @@ Vue.component(`loaned-card`, {
     },
     data() {
         return {
-            popupurl: ""
+            is_card_shown: false
         }
     },
-    template: '#loanedCard',
     methods: {
-        toggleCard() {
-            /*let radio = $(this.$refs.radio);
-            if ($('input[name=card]:checked').is(radio)) {
-                if (radio.prop('checked')) {
-                    radio.prop('checked', false);
-                } else {
-                    radio.prop('checked', true);
-                }
-            }*/
+        showCard() {
+            this.is_card_shown = true;
+        },
+        hideCard() {
+            this.is_card_shown = false;
         }
     },
-    created() {
-        this.popupurl = "#" + this.id
+    render: function(h) {
+        let html_tag = this.is_card ? "div" : "tr";
+        return h(html_tag, this.$scopedSlots.default({loanable_scope: {
+            is_card_shown: this.is_card_shown,
+            showCard: this.showCard,
+            hideCard: this.hideCard
+        }}));
     }
 });
 
@@ -411,6 +449,8 @@ Vue.component(`search`, {
         }
     }
 });
+
+Vue.prototype.$eventHub = new Vue(); // Global event bus
 
 let app = new Vue({
     el: `#app`,

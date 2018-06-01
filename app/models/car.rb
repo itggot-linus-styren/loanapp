@@ -31,9 +31,7 @@ class Car < ActiveRecord::Base
 
         # for mobile
         @subtitle1 = ->{"#{self.brand}"} 
-        @subtitle2 = ->{"status: #{self.status}"}
-        @hidden_label = ""
-        @hidden_content = ->{""}
+        @subtitle2 = ->{""}
     end
 
 end

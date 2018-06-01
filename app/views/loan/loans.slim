@@ -1,7 +1,7 @@
 - @header = "Loaned #{loanable_type.loanable_name}s"
 /search @on-search="onSearch"
 - loans.each do |loan|
-    loaned-card[
+    /loaned-card[
         :keyword="keyword"
         id="#{loan.id}"
         url="/loans/#{type}/#{loan.id}/return"
@@ -9,6 +9,28 @@
         subtitle1="#{loan.loanable.subtitle1}"
         subtitle2="#{loan.loanable.subtitle2}"
         loaned_by="#{loan.responsible}"]
+    div[class="loanable-card"
+        is="loaned-component"
+        :keyword="keyword"]
+        template#loanedCard slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted"            
+            div class="card"
+                div class="card-content" @click.stop="loanable_scope.showCard"
+                    div.left
+                        h2 = loan.loanable.name
+                        div.custom-select
+                            select
+                                - loan.loanable.staticAttributes["status"].call.each_with_index do |value_option, index|
+                                    - if index == 0
+                                        option value="#{index}" selected="" = value_option
+                                    - else
+                                        option value="#{index}" = value_option
+                    div.right
+                        a href="##{loan.id}" class="info"
+                            i class="fa fa-info-circle"
+                        p = loan.loanable.subtitle1
+                        p = loan.responsible
+                div.card-hidden :class="{ card_shown: loanable_scope.is_card_shown }"
+                    a.button v-click-outside="loanable_scope.hideCard" href="/loans/#{type}/#{loan.loanable.id}/return" Return
 div class="hidden"
     - loans.each do |loan|
         loaned-lightbox[

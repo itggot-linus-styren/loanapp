@@ -36,14 +36,6 @@ module LoanableExtension
         @subtitle2.call
     end
 
-    def hidden_label
-        @hidden_label
-    end
-
-    def hidden_content
-        @hidden_content.call
-    end
-
     class_methods do
 
         def loanable_name

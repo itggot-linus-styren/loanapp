@@ -6,54 +6,13 @@ template#copiableTemplate
     div class="copiable"
         div class="textarea"
             textarea readonly="" ref="textarea" {{ text }}
-        a href="#" @click="onClick" Copy
-template#loanableCard
-    div class="card" v-if="!deleted && card_name.toLowerCase().includes(keyword)"
-        input type="checkbox"
-        div class="card-content"
-            div
-                div class="card_name"
-                    h2 ref="card_name" {{ card_name }}
-                    span ref="subtitle1" {{ subtitle1}}
-                div
-                    p ref="subtitle2" {{ subtitle2 }}
-            div
-                div class="dropdown" @click.stop="showDropdown" v-if="show_context"                    
-                    div id="dropdown-menu" class="dropdown-content" v-click-outside="hideDropdown" :class="{ show: is_shown }"
-                        a href="#_" @click="deleteLoanable" Delete
-                        a :href="update_url" Update
-                    i class="fa fa-ellipsis-v info"
-        div class="card-hidden"
-            div class="hidden-content"
-                h3 ref="hidden_label" {{ hidden_label }}
-                p ref="hidden_content" {{ hidden_content }}
-            div
-                a :href="url" Loan                
-template#loanedCard
-    div class="card" v-if="card_name.toLowerCase().includes(keyword) || loaned_by.toLowerCase().includes(keyword)"
-        input type="checkbox"
-        div class="card-content"
-            div
-                div class="card_name"
-                    h2 ref="card_name" {{ card_name }}
-                    span ref="subtitle1" {{ subtitle1}}
-                div
-                    p ref="subtitle2" {{ subtitle2 }}
-            div
-                a :href="popupurl" class="info"
-                    i class="fa fa-info-circle"
-        div class="card-hidden"
-            div class="hidden-content"
-                h3 Loaned by
-                p ref="loaned_by" {{ loaned_by }}
-            div
-                a :href="url" Return 
+        a href="#" @click="onClick" Copy            
 template#lightbox
     a :id="id" class="lightbox" href="#_"
         div class="hidden-content"
             div class="card_name"
                 h2 ref="card_name" {{ card_name }}
-                span ref="subtitle1" {{ subtitle1}}
+                span ref="subtitle1" {{ subtitle1 }}
             div                
                 p ref="loaned_by" {{loaned_by}}
             div
