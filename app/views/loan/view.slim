@@ -48,7 +48,7 @@ div class="tbl-content"
                                 td.context
                                     div class="dropdown" @click.stop="loanable_scope.showDropdown"
                                         div id="dropdown-menu" class="dropdown-content" v-click-outside="loanable_scope.hideDropdown" :class="{ show: loanable_scope.is_shown }"
-                                            a href="#_" @click="loanable_scope.deleteLoanable" Delete
+                                            a.delete href="#_" @click="loanable_scope.deleteLoanable" Delete
                                             a :href="loanable_scope.update_url" Update
                                         i class="fa fa-ellipsis-v info"
                             td
