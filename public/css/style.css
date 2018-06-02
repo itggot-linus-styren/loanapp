@@ -163,9 +163,9 @@ input[type=submit] {
 	position:fixed;
 	width:60px;
 	height:60px;
-	bottom:40px;
-	right:40px;
-	background-color:#0E212D;
+	bottom:80px;
+	right:20px;
+	background-color:#FF8913;
 	color:#FFF;
 	border-radius:50px;
 	text-align:center;
@@ -859,6 +859,7 @@ a.button.margin {
 
 	.float {
 		right: calc(20rem + 40px);
+		bottom: 40px;
 	}
 
 	.card, .mobile {
@@ -1064,7 +1065,7 @@ a.button.margin {
 	}
 	
 	h2 {
-		color: white;
+		color: black;
 	}
 
 	.banner h2 {
