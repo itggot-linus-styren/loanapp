@@ -4,8 +4,14 @@ header
 	- else
 		h1 Loan app
 	.search.mobile
-		input#search-bar-mobile name="" placeholder=("Search loan category") type="text" value="" /
-		label for="search-bar-mobile" onclick="document.querySelector('#search-bar-mobile').value = ''"
+		input#search-bar-mobile[type="text"
+								value=""
+								name="search"
+								placeholder="Search for a person or loanable..."
+								v-model="keyword"
+								@input="onChange"
+								@blur="keyword = ''"]
+		label for="search-bar-mobile"
 			i.fa.fa-search aria-hidden="true"
 		button.clear-icon
 			i.fa.fa-times aria-hidden="true"

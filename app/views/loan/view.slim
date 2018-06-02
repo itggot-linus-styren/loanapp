@@ -1,52 +1,45 @@
 - @header = "#{loanable_type.loanable_name.capitalize}s"
-- if defined? user
+- if ctx.session[:user_id]
     div
         a href="/loans/#{type}/new" class="float"
             i class="fa fa-plus my-float"
 div.sort-by.mobile
     h2 sort by
-    .custom-select
-        select
-            option value="0" selected="" name
-            option value="1" amount            
-/search @on-search="onSearch"
+    div[is="custom-select"
+        select_selected="name"]
+        template slot-scope="{select_scope}"
+            .custom-select v-click-outside="select_scope.hideSelect" @click="select_scope.toggleSelect"
+                .select-selected v-html="select_scope.select_content"
+                .select-items :class="{ 'select-hide': select_scope.select_hide }"
+                    div @click="select_scope.select('name')" name
+                    div @click="select_scope.select('amount')" amount         
 - loanables.each do |loanable|
-    /loanable-card[
-        @alert-notify="doAlertNotify"
-        @alert-error="doAlertError"
-        :keyword="keyword"
-        show_context=defined?(user)
-        id="#{loanable.id}"
-        loanable_type="#{type}"
-        url="/loans/#{type}/#{loanable.id}/loan"
-        card_name="#{loanable.name}"
-        subtitle1="#{loanable.subtitle1}"
-        subtitle2="#{loanable.subtitle2}"
-        hidden_label="#{loanable.hidden_label}"
-        hidden_content="#{loanable.hidden_content}"]
     div[class="loanable-card"
         is="loanable-component"
         @alert-notify="doAlertNotify"
         @alert-error="doAlertError"                    
         :keyword="keyword"
         loanable_name="#{loanable.name}"
+        brand="#{loanable.brand}"
         id="#{loanable.id}"
         loanable_type="#{type}"
         is_card=true]
-        template#loanableCard slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted"            
+        template#loanableCard slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted && loanable_scope.matchSearch()"            
             div class="card"
                 div class="card-content" @click.stop="loanable_scope.showCard"
                     div.left
                         h2 = loanable.name
-                        div.custom-select
-                            select
-                                - loanable.staticAttributes["status"].call.each_with_index do |value_option, index|
-                                    - if index == 0
-                                        option value="#{index}" selected="" = value_option
-                                    - else
-                                        option value="#{index}" = value_option
+                        - value = loanable.staticAttributes["status"].call
+                        div[is="custom-select"
+                            select_selected="#{value[0]}"]
+                            template slot-scope="{select_scope}"
+                                .custom-select v-click-outside="select_scope.hideSelect" @click.stop="select_scope.toggleSelect"
+                                    .select-selected v-html="select_scope.select_content"
+                                    .select-items :class="{ 'select-hide': select_scope.select_hide }"
+                                        - value.each do |value_option|                                   
+                                            div @click="select_scope.select('#{value_option}')" = value_option
                     div.right
-                        - if defined?(user)
+                        - if ctx.session[:user_id]
                             div.context
                                 div class="dropdown" @click.stop="loanable_scope.showDropdown"
                                     div id="dropdown-menu" class="dropdown-content" v-click-outside="loanable_scope.hideDropdown" :class="{ show: loanable_scope.is_shown }"
@@ -66,25 +59,27 @@ div class="tbl-content"
                     @alert-error="doAlertError"                    
                     :keyword="keyword"
                     loanable_name="#{loanable.name}"
+                    brand="#{loanable.brand}"
                     id="#{loanable.id}"
                     loanable_type="#{type}"
                     is_card=false]
-                        template slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted"
+                        template slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted && loanable_scope.matchSearch()"
                             - loanable.staticAttributes.values.zip(loanable_type.fields.values).each do |getter, field|
                                 td
-                                    h2 = field.description 
+                                    h2 = field.description
                                     - value = getter.call
                                     - if value.kind_of?(Array)
-                                        div.custom-select
-                                            select
-                                                - value.each_with_index do |value_option, index|
-                                                    - if index == 0
-                                                        option value="#{index}" selected="" = value_option
-                                                    - else
-                                                        option value="#{index}" = value_option
+                                        div[is="custom-select"
+                                            select_selected="#{value[0]}"]
+                                            template slot-scope="{select_scope}"
+                                                .custom-select v-click-outside="select_scope.hideSelect" @click="select_scope.toggleSelect"
+                                                    .select-selected v-html="select_scope.select_content"
+                                                    .select-items :class="{ 'select-hide': select_scope.select_hide }"
+                                                        - value.each do |value_option|                                   
+                                                            div @click="select_scope.select('#{value_option}')" = value_option
                                     - else
                                         p = value
-                            - if defined?(user)
+                            - if ctx.session[:user_id]
                                 td.context
                                     div class="dropdown" @click.stop="loanable_scope.showDropdown"
                                         div id="dropdown-menu" class="dropdown-content" v-click-outside="loanable_scope.hideDropdown" :class="{ show: loanable_scope.is_shown }"

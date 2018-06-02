@@ -6,10 +6,15 @@ nav
 				| APTIV
 				span.red •
 		.search
-			input#search-bar-desktop name="" placeholder=("Search loan category") type="text" value="" /
+			input#search-bar-desktop[type="text"
+									value=""
+									name="search"
+									placeholder="Search for a person or loanable..."
+									v-model="keyword"
+									@input="onChange"]
 			label for="search-bar-desktop"
 				i.fa.fa-search aria-hidden="true"
-			button.clear-icon onclick=("document.querySelector('#search-bar-desktop').value = ''") 
+			button.clear-icon @click="keyword = ''"
 				i.fa.fa-times aria-hidden="true"
 		.sort-by
 			h2 Sort by

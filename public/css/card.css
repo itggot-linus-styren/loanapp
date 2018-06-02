@@ -50,15 +50,6 @@ div class="card-hidden"
     z-index: 10;
 }
 
-a.button {
-    background-color: white;
-    color: #FF8913;
-}
-
-a.button.margin {
-    margin: 0 25%;
-}
-
 /*
 .hidden-content {
     width: 100%;

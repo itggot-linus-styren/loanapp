@@ -271,7 +271,14 @@ h2 {
 	height: 2.5rem;
 	display: flex;
 	align-items: center;
+	/*justify-content: center;*/
 	transition: background 0.3s ease;
+	/*flex-direction: column;*/
+}
+
+.actions h2 {
+	color: black;
+	text-align: center;
 }
 
 .actions a, .form a {
@@ -747,6 +754,15 @@ a.button.margin {
 	.sort-by .same-as-selected {
 		background-color: #FF8913;
 	}
+
+	a.button {
+		background-color: white;
+		color: #FF8913;
+	}
+	
+	a.button.margin {
+		margin: 0 25%;
+	}
 }
 
 /* desktop */
@@ -849,6 +865,11 @@ a.button.margin {
 		display: none !important;
 	}
 
+	.item {
+		justify-content: center;	
+		flex-direction: column;
+	}
+
 	.category-card {
 		flex: 1 250px;
 		background-color: white;
@@ -935,6 +956,7 @@ a.button.margin {
 	#search-bar-desktop {
 		padding: 1em 0;
 		font-family: 'Poppins', sans-serif;
+		width: 100%;
 	}
 	.search i {
 		color: #FF8913;
@@ -943,6 +965,7 @@ a.button.margin {
 
 	button.clear-icon {
 		display: none;
+		cursor: pointer;
 	}
 
 	#search-bar-desktop:not(:placeholder-shown) ~ button.clear-icon {
@@ -992,6 +1015,12 @@ a.button.margin {
 		color: #fff;
 		transition: 0.2s ease;
 		cursor: pointer;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
 	}
 
 	.category-checkbox input[type="checkbox"]:checked ~ label {

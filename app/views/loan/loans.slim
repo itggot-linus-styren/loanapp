@@ -1,35 +1,35 @@
 - @header = "Loaned #{loanable_type.loanable_name}s"
-/search @on-search="onSearch"
 div.sort-by.mobile
     h2 sort by
-    .custom-select
-        select
-            option value="0" selected="" name
-            option value="1" amount
+    div[is="custom-select"
+        select_selected="name"]
+        template slot-scope="{select_scope}"
+            .custom-select v-click-outside="select_scope.hideSelect" @click="select_scope.toggleSelect"
+                .select-selected v-html="select_scope.select_content"
+                .select-items :class="{ 'select-hide': select_scope.select_hide }"
+                    div @click="select_scope.select('name')" name
+                    div @click="select_scope.select('amount')" amount
 - loans.each do |loan|
-    /loaned-card[
-        :keyword="keyword"
-        id="#{loan.id}"
-        url="/loans/#{type}/#{loan.id}/return"
-        card_name="#{loan.loanable.name}"
-        subtitle1="#{loan.loanable.subtitle1}"
-        subtitle2="#{loan.loanable.subtitle2}"
-        loaned_by="#{loan.responsible}"]
     div[class="loanable-card"
         is="loaned-component"
-        :keyword="keyword"]
-        template#loanedCard slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted"            
+        loanable_name="#{loan.loanable.name}"
+        loaned_by="#{loan.responsible}"
+        :keyword="keyword"
+        is_card=true]
+        template#loanedCard slot-scope="{loanable_scope}" v-if="loanable_scope.matchSearch()"
             div class="card"
                 div class="card-content" @click.stop="loanable_scope.showCard"
                     div.left
                         h2 = loan.loanable.name
-                        div.custom-select
-                            select
-                                - loan.loanable.staticAttributes["status"].call.each_with_index do |value_option, index|
-                                    - if index == 0
-                                        option value="#{index}" selected="" = value_option
-                                    - else
-                                        option value="#{index}" = value_option
+                        - value = loan.loanable.staticAttributes["status"].call
+                        div[is="custom-select"
+                            select_selected="#{value[0]}"]
+                            template slot-scope="{select_scope}"
+                                .custom-select v-click-outside="select_scope.hideSelect" @click.stop="select_scope.toggleSelect"
+                                    .select-selected v-html="select_scope.select_content"
+                                    .select-items :class="{ 'select-hide': select_scope.select_hide }"
+                                        - value.each do |value_option|                                   
+                                            div @click="select_scope.select('#{value_option}')" = value_option
                     div.right
                         a href="##{loan.id}" class="info"
                             i class="fa fa-info-circle"
@@ -53,25 +53,31 @@ div class="tbl-content"
     table cellpadding="0" cellspacing="0" border="0"
         tbody
             - loans.each do |loan|
-                tr
-                    - loan.loanable.staticAttributes.values.zip(loanable_type.fields.values).each do |getter, field|
-                        td
-                            h2 = field.description
-                            - value = getter.call
-                            - if value.kind_of?(Array)
-                                div.custom-select
-                                            select
-                                                - value.each_with_index do |value_option, index|
-                                                    - if index == 0
-                                                        option value="#{index}" selected="" = value_option
-                                                    - else
-                                                        option value="#{index}" = value_option
-                            - else
-                                p = value
-                    td
-                        h2 responsible
-                        a.responsible href="/loans?type=#{type}&responsible=#{loan.responsible}" = loan.responsible
-                    td
-                        a.info href="##{loan.id}" More info
-                    td
-                        a.button href="/loans/#{type}/#{loan.id}/return" Return            
+                tr[is="loaned-component"              
+                    loanable_name="#{loan.loanable.name}"
+                    loaned_by="#{loan.responsible}"
+                    :keyword="keyword"
+                    is_card=false]
+                        template slot-scope="{loanable_scope}" v-if="loanable_scope.matchSearch()"
+                            - loan.loanable.staticAttributes.values.zip(loanable_type.fields.values).each do |getter, field|
+                                td
+                                    h2 = field.description
+                                    - value = getter.call
+                                    - if value.kind_of?(Array)
+                                        div[is="custom-select"
+                                            select_selected="#{value[0]}"]
+                                            template slot-scope="{select_scope}"
+                                                .custom-select v-click-outside="select_scope.hideSelect" @click="select_scope.toggleSelect"
+                                                    .select-selected v-html="select_scope.select_content"
+                                                    .select-items :class="{ 'select-hide': select_scope.select_hide }"
+                                                        - value.each do |value_option|                                   
+                                                            div @click="select_scope.select('#{value_option}')" = value_option
+                                    - else
+                                        p = value
+                            td
+                                h2 responsible
+                                a.responsible href="/loans?type=#{type}&responsible=#{loan.responsible}" = loan.responsible
+                            td
+                                a.info href="##{loan.id}" More info
+                            td
+                                a.button href="/loans/#{type}/#{loan.id}/return" Return

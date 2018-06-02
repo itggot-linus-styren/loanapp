@@ -26,6 +26,11 @@ header {
     justify-content: center;
 }
 
+.applock .active {
+    width: 100% !important;
+    margin: 0 !important;
+}
+
 .applock > header > h1 {
     position: relative;
     font-weight: 600;

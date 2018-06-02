@@ -5,9 +5,17 @@ div class="banner"
 
 div class="actions"
 	- if usermgr.has_permission?(user, :invite)
-		div class="item"
+		div.item
 			a href="/invites/new" Create an account invitation
 
 	- if usermgr.has_permission?(user, :change)
-		div class="item"
-			a href="/loginapp/change" Change app lock password
+		div
+			h2 Change app lock password
+			form action="/loginapp/change" method="post"
+				div
+					input#old_password name="change[old_password]" type="password" placeholder="Old password"
+				div
+					input#password name="change[password]" type="password" placeholder="Password"
+				div
+					input#confirm_password name="change[confirm_password]" type="password" placeholder="Confirm"
+				input type="submit" value="Change"
