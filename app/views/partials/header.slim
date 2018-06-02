@@ -2,4 +2,10 @@ header
 	- if @header
 		h1 == @header
 	- else
-		h1 Loan app		
+		h1 Loan app
+	.search.mobile
+		input#search-bar-mobile name="" placeholder=("Search loan category") type="text" value="" /
+		label for="search-bar-mobile" onclick="document.querySelector('#search-bar-mobile').value = ''"
+			i.fa.fa-search aria-hidden="true"
+		button.clear-icon
+			i.fa.fa-times aria-hidden="true"

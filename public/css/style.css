@@ -454,6 +454,11 @@ a.button.margin {
 		color: white;
 	}
 
+	header {
+		display: flex;
+		flex-direction: column;
+	}
+
 	main {
 		width: 100vw;
 		background: none;
@@ -654,6 +659,46 @@ a.button.margin {
 		margin-top: 1rem;
 	}
 
+	/* SEARCH */
+	.search {
+		width: 90%;		
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+	}
+
+	#search-bar-mobile {
+		padding: 1em 0;
+		font-family: 'Poppins', sans-serif;
+		color: white;
+		width: 0px;
+		border-bottom: 2px solid white;
+		transition: width .4s cubic-bezier(0.000, 0.795, 0.000, 1.000);
+	}
+
+	#search-bar-mobile:focus {
+		width: 100%;
+	}
+
+	.search i {
+		color: white;
+		cursor: pointer;
+	}
+
+	button.clear-icon {
+		display: none;
+		cursor: pointer;
+		z-index: 10;
+	}
+
+	#search-bar-mobile:focus ~ button.clear-icon {
+		display: block;
+	}
+
+	#search-bar-mobile:focus ~ label {
+		display: none;
+	}
+
 	.sort-by {
 		background-color: rgb(41, 41, 41);
 		padding: 0.8rem;
@@ -800,8 +845,8 @@ a.button.margin {
 		right: calc(20rem + 40px);
 	}
 
-	.card {
-		display: none;
+	.card, .mobile {
+		display: none !important;
 	}
 
 	.category-card {
@@ -887,7 +932,7 @@ a.button.margin {
 		justify-content: space-between;
 	}
 
-	#search-bar {
+	#search-bar-desktop {
 		padding: 1em 0;
 		font-family: 'Poppins', sans-serif;
 	}
@@ -900,11 +945,11 @@ a.button.margin {
 		display: none;
 	}
 
-	#search-bar:not(:placeholder-shown) ~ button.clear-icon {
+	#search-bar-desktop:not(:placeholder-shown) ~ button.clear-icon {
 		display: block;
 	}
 
-	#search-bar:not(:placeholder-shown) ~ label {
+	#search-bar-desktop:not(:placeholder-shown) ~ label {
 		display: none;
 	}
 

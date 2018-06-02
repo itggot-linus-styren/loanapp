@@ -2,14 +2,14 @@ nav
 	div#menu-desktop
 		div#menu-header
 			h1
-				span.red> •
+				span.red •
 				| APTIV
 				span.red •
 		.search
-			input#search-bar name="" placeholder=("Search loan category") type="text" value="" /
-			label for="search-bar"
+			input#search-bar-desktop name="" placeholder=("Search loan category") type="text" value="" /
+			label for="search-bar-desktop"
 				i.fa.fa-search aria-hidden="true"
-			button.clear-icon onclick=("document.getElementById('search-bar').value = ''") 
+			button.clear-icon onclick=("document.querySelector('#search-bar-desktop').value = ''") 
 				i.fa.fa-times aria-hidden="true"
 		.sort-by
 			h2 Sort by
