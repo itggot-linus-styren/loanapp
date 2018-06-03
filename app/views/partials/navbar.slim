@@ -14,20 +14,26 @@ nav
 									@input="onChange"]
 			label for="search-bar-desktop"
 				i.fa.fa-search aria-hidden="true"
+<<<<<<< HEAD
 			button.clear-icon @click="keyword = ''"
+=======
+			button.clear-icon onclick=("document.getElementById('search-bar').value = ''")
+>>>>>>> 146b48c604ecbb29768d53cfe228d445d5848bec
 				i.fa.fa-times aria-hidden="true"
 		.sort-by
-			h2 Sort by
+			div.sort-by-title
+				h2 Sort by
+				img src="/img/change_sort.svg" alt="change icon"
 			.categories
 				.category
 					.category-checkbox
 						input#c0 name="" type="checkbox" value="" /
-						label for="c0" 
+						label for="c0"
 					label.category-name for="c0"  Name
 				.category
 					.category-checkbox
 						input#c1 name="" type="checkbox" value="" /
-						label for="c1" 
+						label for="c1"
 					label.category-name for="c1"  Amount
 		.links
 			a href="/loans" /
@@ -50,7 +56,7 @@ nav
 		span
 		span class="smaller"
 		span
-		div#scrim	
+		div#scrim
 		ul#menu
 			div class="top"
 				div class="item"
@@ -75,4 +81,4 @@ nav
 				- else
 					div class="item"
 						a href="/user/admin/login"
-							li Login admin				
+							li Login admin
