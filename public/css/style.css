@@ -763,6 +763,17 @@ a.button.margin {
 	a.button.margin {
 		margin: 0 25%;
 	}
+
+	.sort-by-mobile img {
+		margin-left: 1rem;
+		transition: 0.2s ease;
+		cursor: pointer;
+		fill: white;
+	}
+
+	.sort-by-mobile img:hover {
+		transform: rotate(180deg);
+	}
 }
 
 /* desktop */

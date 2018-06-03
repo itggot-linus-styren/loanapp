@@ -5,32 +5,29 @@ nav
 				span.red •
 				| APTIV
 				span.red •
-		.search
-			input#search-bar-desktop[type="text"
-									value=""
-									name="search"
-									placeholder="Search for a person or loanable..."
-									v-model="keyword"
-									@input="onChange"]
-			label for="search-bar-desktop"
-				i.fa.fa-search aria-hidden="true"
-			button.clear-icon @click="keyword = ''"
-				i.fa.fa-times aria-hidden="true"
-		.sort-by
-			div.sort-by-title
-				h2 Sort by
-				img src="/img/change_sort.svg" alt="change icon"
-			.categories
-				.category
-					.category-checkbox
-						input#c0 name="" type="checkbox" value="" /
-						label for="c0"
-					label.category-name for="c0"  Name
-				.category
-					.category-checkbox
-						input#c1 name="" type="checkbox" value="" /
-						label for="c1"
-					label.category-name for="c1"  Amount
+		- if @sortby
+			.search
+				input#search-bar-desktop[type="text"
+										value=""
+										name="search"
+										placeholder="Search for a person or loanable..."
+										v-model="keyword"
+										@input="onChange"]
+				label for="search-bar-desktop"
+					i.fa.fa-search aria-hidden="true"
+				button.clear-icon @click="keyword = ''"
+					i.fa.fa-times aria-hidden="true"
+			.sort-by
+				div.sort-by-title
+					h2 Sort by
+					img src="/img/change_sort.svg" alt="change icon"
+				.categories
+					- @sortby.each_with_index do |sortby_option, index|
+						.category
+							.category-checkbox
+								input id="c#{index}" name="" type="checkbox" value="" /
+								label for="c#{index}"
+							label.category-name for="c#{index}"  = sortby_option					
 		.links
 			a href="/loans" /
 			h2 See all loanables

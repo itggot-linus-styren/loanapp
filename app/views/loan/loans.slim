@@ -1,14 +1,6 @@
 - @header = "Loaned #{loanable_type.loanable_name}s"
-div.sort-by.mobile
-    h2 sort by
-    div[is="custom-select"
-        select_selected="name"]
-        template slot-scope="{select_scope}"
-            .custom-select v-click-outside="select_scope.hideSelect" @click="select_scope.toggleSelect"
-                .select-selected v-html="select_scope.select_content"
-                .select-items :class="{ 'select-hide': select_scope.select_hide }"
-                    div @click="select_scope.select('name')" name
-                    div @click="select_scope.select('amount')" amount
+- @sortby = loanable_type.fields.values.map {|field| field.description} + ["Responsible", "Loaned since", "Times loaned"]
+== partial :'partials/sortby'
 - loans.each do |loan|
     div[class="loanable-card"
         is="loaned-component"
