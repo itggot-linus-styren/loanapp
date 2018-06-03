@@ -1,5 +1,5 @@
-h2 Create a new loanable #{loanable_type.loanable_name}
-form action="/loans/#{type}/new" method="post"   
+h2.subtitle Create a new loanable #{loanable_type.loanable_name}
+form action="/loans/#{type}/new" method="post"
 	- loanable_type.fields.each do |name, field|
 		div
 			- if field.options
