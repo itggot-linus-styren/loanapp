@@ -104,11 +104,7 @@ header > h1 {
 	background: none;
 }
 
-<<<<<<< HEAD
 .category-card > .category-card-label > span {	
-=======
-.loanable-card > .loanable-card-label > span {
->>>>>>> 146b48c604ecbb29768d53cfe228d445d5848bec
 	color:white;
 	text-transform: uppercase;
 	font-size: 0.8rem;
@@ -859,9 +855,6 @@ a.button.margin {
 		height: auto !important;
 		width: auto !important;
 		padding: 5rem !important;
-<<<<<<< HEAD
-	}	
-=======
 	}
 
 	a.button {
@@ -890,7 +883,6 @@ a.button.margin {
 	a.button.margin {
 		margin: 0 25%;
 	}
->>>>>>> 146b48c604ecbb29768d53cfe228d445d5848bec
 
 	.float {
 		right: calc(20rem + 40px);
@@ -918,13 +910,8 @@ a.button.margin {
 		max-width: 30rem;
 		margin: 1em;
 	}
-<<<<<<< HEAD
 	
 	.category-card > img {
-=======
-
-	.loanable-card > img {
->>>>>>> 146b48c604ecbb29768d53cfe228d445d5848bec
 		width: 100%;
 	}
 
@@ -1129,9 +1116,6 @@ a.button.margin {
 	#scrim {
 		display: none;
 	}
-<<<<<<< HEAD
-}
-=======
 
 	/* DROPDOWN */
 	.custom-select {
@@ -1191,4 +1175,3 @@ a.button.margin {
 		background-color: #f5f5f5;
 	}
 }
->>>>>>> 146b48c604ecbb29768d53cfe228d445d5848bec
