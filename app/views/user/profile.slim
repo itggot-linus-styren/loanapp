@@ -10,7 +10,7 @@ div class="actions"
 
 	- if usermgr.has_permission?(user, :change)
 		div
-			h2 Change app lock password
+			h2.subtitle Change app lock password
 			form action="/loginapp/change" method="post"
 				div
 					input#old_password name="change[old_password]" type="password" placeholder="Old password"

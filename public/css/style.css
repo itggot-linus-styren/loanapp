@@ -39,7 +39,6 @@ header {
 
 header > h1 {
 	color: white;
-	padding-left: 1rem;
 	font-size: 1.2rem;
 	font-weight: 100;
 	text-transform: uppercase;
@@ -95,7 +94,7 @@ header > h1 {
 	line-height: 0;
 }
 
-.category-card > .category-card-label > a {
+.category-card > .category-card-label > p {
 	position: relative;
 	text-decoration: none;
 	padding-right: 1rem;
@@ -104,7 +103,7 @@ header > h1 {
 	background: none;
 }
 
-.category-card > .category-card-label > span {	
+.category-card > .category-card-label > span {
 	color:white;
 	text-transform: uppercase;
 	font-size: 0.8rem;
@@ -163,7 +162,7 @@ input[type=submit] {
 	position:fixed;
 	width:60px;
 	height:60px;
-	bottom:80px;
+	bottom: 20px;
 	right:20px;
 	background-color:#FF8913;
 	color:#FFF;
@@ -210,29 +209,29 @@ main form > div {
 }
 
 main input {
-	padding: 1rem;
+	height: 56px;
 	font-size: 1.5rem;
-	border: none;
-	background: #DEDEDE;
+	border: 3px solid #FF8913;
 	border-radius:1000px;
-	color: black;
+	color: #FF8913;
 	width: 100%;
+	padding-left: 1rem;
 }
 
 main input::placeholder {
-	color: rgba(0, 0, 0, 0.54);
-	opacity: 0.54 !important;
 	font-size: 1rem;
+	color: #FF8913;
 }
 
 main input[type=submit] {
-	background: #0E212D;
+	height: 56px;
+	background: #212121;
 	font-weight: bold;
 	text-transform: uppercase;
 	color: white;
 	font-size: 1rem;
-	width: 8rem;
 	margin: 1rem;
+	border: 3px #212121;
 }
 
 main form .options {
@@ -245,6 +244,11 @@ main form .options ~ input {
 
 h2 {
 	font-weight: 200;
+}
+
+.subtitle {
+	width: 90%;
+	margin: 1rem auto 0;
 }
 
 .banner {
@@ -359,6 +363,7 @@ input[type="radio"] {
 }
 
 /* DROPDOWN */
+
 .custom-select {
 	width: 130px;
 	position: relative;
@@ -372,6 +377,7 @@ input[type="radio"] {
 	border-radius: 3px;
 	color: #fff !important;
 	font-weight: bold !important;
+	margin-top: 1rem;
 }
 /*style the arrow inside the select element:*/
 .select-selected:after {
@@ -425,7 +431,7 @@ a.button {
 	color: initial;
 
 	display: block;
-	padding: 1em 1em;		
+	padding: 1em 1em;
 	border-radius: 1000px;
 	display: flex;
 	align-items: center;
@@ -473,6 +479,7 @@ a.button.margin {
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		margin: auto;
 	}
 
 	.item {
@@ -668,7 +675,7 @@ a.button.margin {
 
 	/* SEARCH */
 	.search {
-		width: 90%;		
+		width: 90%;
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;
@@ -681,6 +688,10 @@ a.button.margin {
 		width: 0px;
 		border-bottom: 2px solid white;
 		transition: width .4s cubic-bezier(0.000, 0.795, 0.000, 1.000);
+	}
+
+	#search-bar-mobile::placeholder {
+		color: #fff;
 	}
 
 	#search-bar-mobile:focus {
@@ -711,9 +722,8 @@ a.button.margin {
 		padding: 0.8rem;
 		width: 90%;
 		display: flex;
-		align-self: center;
-		justify-content: space-between;
 		align-items: center;
+		justify-content: space-between;
 		margin-top: 0.5rem;
 		border-radius: 3px;
 	}
@@ -728,9 +738,10 @@ a.button.margin {
 	.sort-by .select-selected {
 		background-color: white;
 		color: #FF8913 !important;
+		margin: 0;
 	}
 	/*style the arrow inside the select element:*/
-	.sort-by .select-selected:after {		
+	.sort-by .select-selected:after {
 		border-color: #FF8913 transparent transparent transparent;
 	}
 	/*point the arrow upwards when the select box is open (active):*/
@@ -759,19 +770,26 @@ a.button.margin {
 		background-color: white;
 		color: #FF8913;
 	}
-	
+
 	a.button.margin {
 		margin: 0 25%;
 	}
 
-	.sort-by-mobile img {
+	.sort-by-title {
+		display: flex;
+		align-items: center;
+		color: #fff;
+	}
+
+	.sort-by-title img {
 		margin-left: 1rem;
 		transition: 0.2s ease;
 		cursor: pointer;
-		fill: white;
+		width: 24px;
+		height: 24px;
 	}
 
-	.sort-by-mobile img:hover {
+	.sort-by-title img:hover {
 		transform: rotate(180deg);
 	}
 }
@@ -905,7 +923,7 @@ a.button.margin {
 	}
 
 	.item {
-		justify-content: center;	
+		justify-content: center;
 		flex-direction: column;
 	}
 
@@ -921,7 +939,7 @@ a.button.margin {
 		max-width: 30rem;
 		margin: 1em;
 	}
-	
+
 	.category-card > img {
 		width: 100%;
 	}
@@ -1023,12 +1041,16 @@ a.button.margin {
 
 	.sort-by-title {
 		display: flex;
+		align-items: center;
+		color: #fff;
 	}
 
 	.sort-by-title img {
 		margin-left: 1rem;
 		transition: 0.2s ease;
 		cursor: pointer;
+		width: 24px;
+		height: 24px;
 	}
 
 	.sort-by-title img:hover {

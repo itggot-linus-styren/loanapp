@@ -9,14 +9,14 @@
     div[class="loanable-card"
         is="loanable-component"
         @alert-notify="doAlertNotify"
-        @alert-error="doAlertError"                    
+        @alert-error="doAlertError"
         :keyword="keyword"
         loanable_name="#{loanable.name}"
         brand="#{loanable.brand}"
         id="#{loanable.id}"
         loanable_type="#{type}"
         is_card=true]
-        template#loanableCard slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted && loanable_scope.matchSearch()"            
+        template#loanableCard slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted && loanable_scope.matchSearch()"
             div class="card"
                 div class="card-content" @click.stop="loanable_scope.showCard"
                     div.left
@@ -28,7 +28,7 @@
                                 .custom-select v-click-outside="select_scope.hideSelect" @click.stop="select_scope.toggleSelect"
                                     .select-selected v-html="select_scope.select_content"
                                     .select-items :class="{ 'select-hide': select_scope.select_hide }"
-                                        - value.each do |value_option|                                   
+                                        - value.each do |value_option|
                                             div @click="select_scope.select('#{value_option}')" = value_option
                     div.right
                         - if ctx.session[:user_id]
@@ -39,7 +39,7 @@
                                         a href="/loans/#{type}/#{loanable.id}/edit" Update
                                     i class="fa fa-ellipsis-v info"
                         p ref="subtitle1" = loanable.subtitle1
-                        p ref="subtitle2" = loanable.subtitle2                            
+                        p ref="subtitle2" = loanable.subtitle2
                 div.card-hidden :class="{ card_shown: loanable_scope.is_card_shown }"
                     a.button v-click-outside="loanable_scope.hideCard" href="/loans/#{type}/#{loanable.id}/loan" Loan
 div class="tbl-content"
@@ -48,7 +48,7 @@ div class="tbl-content"
             - loanables.each do |loanable|
                 tr[is="loanable-component"
                     @alert-notify="doAlertNotify"
-                    @alert-error="doAlertError"                    
+                    @alert-error="doAlertError"
                     :keyword="keyword"
                     loanable_name="#{loanable.name}"
                     brand="#{loanable.brand}"
@@ -67,7 +67,7 @@ div class="tbl-content"
                                                 .custom-select v-click-outside="select_scope.hideSelect" @click="select_scope.toggleSelect"
                                                     .select-selected v-html="select_scope.select_content"
                                                     .select-items :class="{ 'select-hide': select_scope.select_hide }"
-                                                        - value.each do |value_option|                                   
+                                                        - value.each do |value_option|
                                                             div @click="select_scope.select('#{value_option}')" = value_option
                                     - else
                                         p = value

@@ -13,7 +13,7 @@ div class="card-hidden"
     div class="hidden-content"
         h3 {{ hidden_label }}
         p {{ hidden_content }}
-    a href="#" @click="onClick" Loan 
+    a href="#" @click="onClick" Loan
 */
 
 .loanable-card {
@@ -87,7 +87,7 @@ div class="card-hidden"
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     margin: 1rem;
-    text-decoration: none;    
+    text-decoration: none;
 }*/
 
 .card-content {
@@ -121,7 +121,11 @@ div class="card-hidden"
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    text-align: right;
+}
+
+.card-content > .right p {
+    margin-top: 0.5rem;
 }
 
 /*
@@ -190,11 +194,11 @@ div class="card-hidden"
   top: 0;
   left: 0;
   right: 2rem;
-  
+
   cursor: pointer;
-  
+
   opacity: 0;
-  
+
   -webkit-touch-callout: none;
 }
 
@@ -235,8 +239,8 @@ a.info:hover {
 	top: 0;
 	left: 0;
     background: rgba(0,0,0,0.8);
-    
-    text-decoration: none;    
+
+    text-decoration: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
