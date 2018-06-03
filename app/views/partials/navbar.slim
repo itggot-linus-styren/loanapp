@@ -9,20 +9,22 @@ nav
 			input#search-bar name="" placeholder=("Search loan category") type="text" value="" /
 			label for="search-bar"
 				i.fa.fa-search aria-hidden="true"
-			button.clear-icon onclick=("document.getElementById('search-bar').value = ''") 
+			button.clear-icon onclick=("document.getElementById('search-bar').value = ''")
 				i.fa.fa-times aria-hidden="true"
 		.sort-by
-			h2 Sort by
+			div.sort-by-title
+				h2 Sort by
+				img src="/img/change_sort.svg" alt="change icon"
 			.categories
 				.category
 					.category-checkbox
 						input#c0 name="" type="checkbox" value="" /
-						label for="c0" 
+						label for="c0"
 					label.category-name for="c0"  Name
 				.category
 					.category-checkbox
 						input#c1 name="" type="checkbox" value="" /
-						label for="c1" 
+						label for="c1"
 					label.category-name for="c1"  Amount
 		.links
 			a href="/loans" /
@@ -45,7 +47,7 @@ nav
 		span
 		span class="smaller"
 		span
-		div#scrim	
+		div#scrim
 		ul#menu
 			div class="top"
 				div class="item"
@@ -70,4 +72,4 @@ nav
 				- else
 					div class="item"
 						a href="/user/admin/login"
-							li Login admin				
+							li Login admin

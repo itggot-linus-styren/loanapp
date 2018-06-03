@@ -104,9 +104,9 @@ header > h1 {
 	background: none;
 }
 
-.loanable-card > .loanable-card-label > span {	
+.loanable-card > .loanable-card-label > span {
 	color:white;
-	text-transform: uppercase;	
+	text-transform: uppercase;
 	font-size: 0.8rem;
 	font-weight: 600;
 }
@@ -176,7 +176,7 @@ input[type=submit] {
 }
 
 .my-float {
-	margin-top:22px;	
+	margin-top:22px;
 }
 
 .float:hover {
@@ -345,7 +345,7 @@ input[type="radio"] {
 	text-decoration: none;
 }
 
-.invited .textarea a {		
+.invited .textarea a {
 	color: rgba(0, 0, 0, 0.54);
 	text-decoration: none;
 	font-size: 0.8rem;
@@ -362,7 +362,7 @@ input[type="radio"] {
 		align-items: center;
 	}
 
-	#mobile-header > h1 {		
+	#mobile-header > h1 {
 		font-weight: 600;
 		font-size: 1.2rem;
 		margin-left: 2rem;
@@ -401,13 +401,13 @@ input[type="radio"] {
 		top: calc(-2rem - 8px);
 		right: 1rem;
 		left: calc(100% - 1rem - 40px);
-		
+
 		z-index: 999;
-		
+
 		-webkit-user-select: none;
 		user-select: none;
 	}
-	
+
 	#menuToggle input
 	{
 		display: block;
@@ -416,15 +416,15 @@ input[type="radio"] {
 		position: absolute;
 		top: -7px;
 		left: -5px;
-		
+
 		cursor: pointer;
-		
+
 		opacity: 0;
 		z-index: 2; /* place it over the hamburger */
-		
+
 		-webkit-touch-callout: none;
 	}
-	
+
 	/* hamburger icon */
 	#menuToggle span
 	{
@@ -433,48 +433,48 @@ input[type="radio"] {
 		height: 4px;
 		margin-bottom: 5px;
 		position: relative;
-		
+
 		background: white;
 		border-radius: 3px;
-		
+
 		z-index: 1;
-		
+
 		transform-origin: 4px 0px;
-		
+
 		transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
 					background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
 					opacity 0.55s ease;
 	}
-	
+
 	#menuToggle span:first-of-type
 	{
 		transform-origin: 0% 0%;
 		/*transform: translateX(100px);*/
 	}
-	
+
 	#menuToggle span:last-of-type
 	{
 		transform-origin: 0% 100%;
 	}
-	
+
 	#menuToggle input:checked ~ span:first-of-type
 	{
 		opacity: 1;
 		transform: rotate(45deg) translate(-3px, -6px);
 		background: #F5F5F5;
 	}
-	
+
 	#menuToggle input:checked ~ span:nth-last-of-type(2)
 	{
 		opacity: 0;
 		transform: rotate(0deg) scale(0.2, 0.2);
 	}
-	
+
 	#menuToggle input:checked ~ span:nth-last-of-type(1)
 	{
 		transform: rotate(-45deg) translate(3px, -1px);
 	}
-	
+
 	#menu
 	{
 		position: absolute;
@@ -483,26 +483,26 @@ input[type="radio"] {
 		padding: 50px;
 		padding-top: 125px;
 		height: calc(100vh + 49px);
-		
+
 		background: rgba(255, 137, 19, 0.9);
 		list-style-type: none;
 		-webkit-font-smoothing: antialiased;
-		
+
 		transform-origin: 0% 0%;
 		transform: translate(100%, 0);
-		
+
 		transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
 	}
-	
+
 	#menu {
 		display: flex;
 		flex-direction: column;
 	}
-	
+
 	#menu .top {
 		height: 100%;
 	}
-	
+
 	#menu .item {
 		width: 300px;
 		background: none;
@@ -513,20 +513,20 @@ input[type="radio"] {
 		align-items: center;
 		transition: background 0.3s ease;
 	}
-	
+
 	#menu a {
 		text-decoration: none;
 		z-index: 3;
 	}
-	
+
 	#menu .top .item:hover {
 		background: rgba(255, 255, 255, 0.5);
-	}	
-	
+	}
+
 	#menu .bottom .item:hover {
 		background: rgba(6, 107, 107, 1);
 	}
-	
+
 	#menu li {
 		color: white;
 		padding-left: 1rem;
@@ -536,17 +536,17 @@ input[type="radio"] {
 	#menu .bottom .item {
 		background: #A35100;
 	}
-	
+
 	.smaller {
 		width: 26px !important;
 		margin-left: 7px;
 	}
-	
+
 	#menuToggle input:checked ~ ul
 	{
 		transform: none;
 	}
-	
+
 	#scrim {
 		position: fixed;
 		background: rgba(0, 0, 0, 0);
@@ -558,11 +558,11 @@ input[type="radio"] {
 		right: 0;
 		transition: background 0.5s ease;
 	}
-	
+
 	#menuToggle input:checked ~ #scrim {
 		pointer-events: all;
 		background: rgba(0, 0, 0, 0.54);
-	}	
+	}
 
 	#search {
 		width: calc(100% - 2rem);
@@ -577,7 +577,7 @@ input[type="radio"] {
 		display: grid;
 		grid-template-areas: "header nav"
 							 "main nav";
-		grid-template-columns: auto 20rem;							
+		grid-template-columns: auto 20rem;
 	}
 
 	header {
@@ -610,8 +610,8 @@ input[type="radio"] {
 	table {
 		width: 100%;
 		table-layout: fixed;
-	}	
-	
+	}
+
 	.tbl-content {
 		overflow-x:auto;
 		margin-top: 0px;
@@ -619,7 +619,7 @@ input[type="radio"] {
 		width: 90%;
 		height: calc(100vh - (128px + 16px));
 	}
-	
+
 	td h2 {
 		text-align: left;
 		font-weight: 600;
@@ -628,7 +628,7 @@ input[type="radio"] {
 		margin-bottom: 0.5rem;
 		text-transform: uppercase;
 	}
-	
+
 	td {
 		padding: 15px;
 		text-align: left;
@@ -666,12 +666,12 @@ input[type="radio"] {
 		-webkit-appearance: none;
 		-moz-appearance: none;
 		appearance: none;
-	
+
 		text-decoration: none;
 		color: initial;
 
 		display: block;
-		padding: 1em 1em;		
+		padding: 1em 1em;
 		border-radius: 1000px;
 		display: flex;
 		align-items: center;
@@ -709,7 +709,7 @@ input[type="radio"] {
 		max-width: 30rem;
 		margin: 1em;
 	}
-	
+
 	.loanable-card > img {
 		width: 100%;
 	}
@@ -807,6 +807,20 @@ input[type="radio"] {
 		width: 90%;
 	}
 
+	.sort-by-title {
+		display: flex;
+	}
+
+	.sort-by-title img {
+		margin-left: 1rem;
+		transition: 0.2s ease;
+		cursor: pointer;
+	}
+
+	.sort-by-title img:hover {
+		transform: rotate(180deg);
+	}
+
 	.category {
 		display: flex;
 		align-items: center;
@@ -881,7 +895,7 @@ input[type="radio"] {
 		bottom: 2rem;
 		text-transform: capitalize;
 	}
-	
+
 	h2 {
 		color: white;
 	}
