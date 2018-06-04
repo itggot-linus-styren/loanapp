@@ -1,3 +1,7 @@
+unless File.exist?("config/cookie")
+    File.open("config/cookie", "w") {|f| f.write(rand(36**20).to_s(36))}
+end
+
 require_relative 'imports.rb'
 require_relative 'dsl/route_parser.rb'
 
