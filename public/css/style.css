@@ -1241,4 +1241,8 @@ a.button.margin {
 	.option {
 		width: 2.75rem;
 	}
+
+	.subtitle {
+		text-align: center;
+	}
 }

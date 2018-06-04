@@ -9,14 +9,14 @@ class Car < ActiveRecord::Base
     @fields = {
         "name" => Field.new(:text, "Car registration number"),
         "brand" => Field.new(:text, "Brand"),
-        "status" => Field.new(:text, "Status")
+        "status" => Field.new(:text, "Status", ["ok", "unclear", "broken"])
     }
 
     def set_getters_and_setters       
         @staticAttributes = {
             "name" => ->{"#{self.name}"},
             "brand" => ->{"#{self.brand}"},
-            "status" => ->{"#{self.status}"}
+            "status" => ->{(["#{self.status}"] + fields()["status"].options).uniq}
         }
 
         @updateableAttributes = {"status" => ->(value){self.status = value}}

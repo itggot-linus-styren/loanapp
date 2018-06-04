@@ -12,6 +12,9 @@
 
 #app {
     display: flex !important;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 header {
@@ -31,35 +34,22 @@ header {
     margin: 0 !important;
 }
 
+.applock header {
+    position: relative !important;
+    height: 4rem;
+}
+
 .applock > header > h1 {
     position: relative;
     font-weight: 600;
     font-size: 2rem;
     color: white;
+    margin-top: 10%;
 }
 
-.applock > header > h1::before {
-    position: absolute;
-    top: calc(50% - 4px);
-    left: 0;
-    content: '';
-    background-color:#D62626;
-    border-radius: 50%;
-    width: 8px;
-    height: 8px;
-    pointer-events: none;
-}
-
-.applock > header > h1::after {
-    position: absolute;
-    top: calc(50% - 4px);
-    left: calc(100% + 4px);
-    content: '';
-    background-color:#D62626;
-    border-radius: 50%;
-    width: 8px;
-    height: 8px;
-    pointer-events: none;
+.applock main {
+    height: 100%;
+    margin-top: -2rem;
 }
 
 .applock main form {
@@ -73,7 +63,7 @@ header {
 .applock main form > div {
     margin: 0;
     padding-bottom: 1rem;
-    width: 80%;
+    width: 300px;
     display: flex;
     justify-content: center;
     align-content: center;    
@@ -154,7 +144,6 @@ header {
 /* mobile-first */
 @media (max-width: 480px) {
     .applock > header {
-        position: fixed;
         top: 10%;
         background: none;
         display: flex;
@@ -188,6 +177,10 @@ header {
         margin: 0;
     }
 
+    .applock main form > div {
+        width: 80%;
+    }
+
     .applock > main > #text {
         display: none;
     }
@@ -195,45 +188,9 @@ header {
 
 /* desktop */
 @media (min-width: 481px) {
-    /*
-    header {
-        position: fixed;
-        top: 0;
-        background-color: #0E212D;
-        height: 4rem;
-        width: 100%;
-        display: flex;
-        align-items: center;
-    }
-
-    .applock > header > h1 {
-        color: white;
-        margin-left: 1rem;
-    }
-
-    .applock > main > #text {
-        display: block;
-        color: white;
-        margin-bottom: 2rem;
-    }
-
-    .applock > main {
-        background: #6e828e;
-        display: flex;
-        align-content: center;
-        justify-content: center;
-        flex-direction: column;
-        padding: 2rem;
-        margin: auto;
-        width: calc(100vw / 3);
-        -webkit-box-shadow: -4px 4px 58px -26px rgba(0,0,0,0.53);
-        -moz-box-shadow: -4px 4px 58px -26px rgba(0,0,0,0.53);
-        box-shadow: -4px 4px 58px -26px rgba(0,0,0,0.53);
-    }
-    */
+    
     .applock > header {
         position: fixed;
-        top: 10%;
         background: none;
         display: flex;
         align-content: center;

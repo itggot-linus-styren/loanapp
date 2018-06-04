@@ -4,7 +4,10 @@ body
 	== partial :'partials/vuetemplates'
 	div#app class="applock"
 		header
-			h1 APTIV
+			h1
+				span.red •
+				| APTIV
+				span.red •
 		== partial :'partials/main'
 			h2#text Enter applock password to use this app
 			form action="/loginapp" method="post"   
