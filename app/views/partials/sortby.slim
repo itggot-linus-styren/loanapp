@@ -9,4 +9,4 @@ div.sort-by.mobile[is="sort-by"
                 .select-selected v-html="select_scope.select_content"
                 .select-items :class="{ 'select-hide': select_scope.select_hide }"
                     - @sortby.each do |sortby_option|
-                        div @click="select_scope.sortBy('#{sortby_option}')" = sortby_option
+                        div @click="select_scope.sortBy('#{sortby_option}')" = sortby_option.gsub("_", " ")

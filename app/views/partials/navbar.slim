@@ -29,7 +29,7 @@ nav
 									.category-checkbox
 										input id="c#{index}" name="" type="checkbox" value="" :checked="select_scope.select_content.trim() == '#{sortby_option}'"
 										label for="c#{index}"
-									label.category-name for="c#{index}"  = sortby_option
+									label.category-name for="c#{index}"  = sortby_option.gsub("_", " ")
 		.links
 			a href="/loans" /
 			h2 See all loanables

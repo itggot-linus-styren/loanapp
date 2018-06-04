@@ -1098,6 +1098,7 @@ a.button.margin {
 		color: #FF8913;
 		margin-left: 0.5rem;
 		cursor: pointer;
+		text-transform: capitalize;
 	}
 
 	.category-checkbox {
@@ -1124,7 +1125,7 @@ a.button.margin {
 		-khtml-user-select: none;
 		-moz-user-select: none;
 		-ms-user-select: none;
-		user-select: none;
+		user-select: none;		
 	}
 
 	.category-checkbox input[type="checkbox"]:checked ~ label {
