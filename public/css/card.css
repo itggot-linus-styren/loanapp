@@ -225,10 +225,6 @@ a.info > i {
     color: #FF8913;
 }
 
-a.info:hover {
-    transform: scale(1.5, 1.5);
-}
-
 .lightbox {
 	display: none;
 

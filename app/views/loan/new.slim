@@ -2,10 +2,21 @@ h2.subtitle Create a new loanable #{loanable_type.loanable_name}
 form action="/loans/#{type}/new" method="post"
 	- loanable_type.fields.each do |name, field|
 		div
-			- if field.options
-				div class="options"
-					select name="options[#{name}]"
-						- field.options.each do |value|
-							option value="#{value}" #{value}
-			input id="#{name}" name="create[#{name}]" type="#{field.type}" placeholder="#{field.description}"
+			- if field.options && field.type == :text				
+				div.select-option[is="custom-select"
+					select_selected="#{field.options[0]}"]
+					template slot-scope="{select_scope}"
+						input id="#{name}" name="create[#{name}]" type="hidden" v-model="select_scope.select_content"
+						.custom-select v-click-outside="select_scope.hideSelect" @click="select_scope.toggleSelect"
+							.select-selected v-html="select_scope.select_content"
+							.select-items :class="{ 'select-hide': select_scope.select_hide }"
+								- field.options.each do |value_option|
+									div @click="select_scope.select('#{value_option}')" = value_option
+			- else
+				- if field.options
+					div class="options"
+						select.option name="options[#{name}]"
+							- field.options.each do |value|
+								option value="#{value}" #{value}
+				input id="#{name}" name="create[#{name}]" type="#{field.type}" placeholder="#{field.description}"
   	input type="submit" value="Create"

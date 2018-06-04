@@ -25,6 +25,7 @@ class LoanHandler
             setter.call(values["new_#{name}"])
         end
         loan.returned_at = Time.now
+        loan.loanable.save
         loan.save
     end
 

@@ -8,7 +8,7 @@ class Harddrive < ActiveRecord::Base
 
     @fields = {
         "name" => Field.new(:text, "HDD name"),
-        "status" => Field.new(:text, "Status"),
+        "status" => Field.new(:text, "Status", ["ok", "unclear", "broken"]),
         "brand" => Field.new(:text, "Brand"),
         "disksize" => Field.new(:number, "Disksize", ["TB", "GB"]),
     }
@@ -22,11 +22,9 @@ class Harddrive < ActiveRecord::Base
     end
 
     def set_getters_and_setters
-        @statusValues = ["ok", "unclear", "broken"]
-
         @staticAttributes = {
             "name" => ->{"#{self.name}"},
-            "status" => ->{(["#{self.status}"] + @statusValues).uniq},
+            "status" => ->{(["#{self.status}"] + fields()["status"].options).uniq},
             "brand" => ->{"#{self.brand}"},
             "disksize" => ->{"#{self.disksize} TB"},
         }

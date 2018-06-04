@@ -1,12 +1,12 @@
-div.sort-by.mobile
-    div.sort-by-title
-        h2 Sort by
-        img src="/img/sort_by_change_order_white.svg" alt="change icon"
-    div[is="custom-select"
-        select_selected="#{@sortby[0]}"]
-        template slot-scope="{select_scope}"
+div.sort-by.mobile[is="sort-by"        
+    select_selected="#{@sortby[0]}"]
+    template slot-scope="{select_scope}"
+        div.sort-by-title
+            h2 Sort by
+            img src="/img/sort_by_change_order_white.svg" alt="change icon" @click="select_scope.reverseOrder"
+        div
             .custom-select v-click-outside="select_scope.hideSelect" @click="select_scope.toggleSelect"
                 .select-selected v-html="select_scope.select_content"
                 .select-items :class="{ 'select-hide': select_scope.select_hide }"
                     - @sortby.each do |sortby_option|
-                        div @click="select_scope.select('#{sortby_option}')" = sortby_option
+                        div @click="select_scope.sortBy('#{sortby_option}')" = sortby_option

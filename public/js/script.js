@@ -129,6 +129,63 @@ Vue.directive('click-outside', {
     }
 });
 
+Vue.component(`sort-by`, {
+    props: {    
+        select_selected: {
+            type: String,
+            default: ""
+        }
+    },
+    data() {
+        return {
+            select_hide: true,
+            select_content: this.select_selected,
+            sortby_order: "asc"
+        }
+    },
+    methods: {        
+        showSelect() {
+            this.$eventHub.$emit(`hide-all-dropdowns`);
+            this.select_hide = false;
+        },
+        hideSelect() {
+            this.select_hide = true;
+        },
+        toggleSelect() {
+            if (this.select_hide) {
+                this.showSelect();
+            } else {
+                this.hideSelect();
+            }
+        },
+        sortBy(sort_option) {
+            var parsedUrl = new URL(window.location.href);
+            parsedUrl.searchParams.set('sortby', `${sort_option.trim()} ${this.sortby_order.trim()}`);        
+            window.location.href = parsedUrl.href;
+        },
+        reverseOrder() {
+            this.sortby_order = this.sortby_order == "asc" ? "desc" : "asc";
+            this.sortBy(this.select_content);
+        }
+    },
+    created() {
+        this.$eventHub.$on('hide-all-dropdowns', this.hideSelect);
+        let parsedUrl = new URL(window.location.href);
+        let sortByContent = parsedUrl.searchParams.get('sortby');
+        if (sortByContent) {
+            let re = /(asc|desc)$/g;
+            this.sortby_order = (sortByContent.match(re) || [this.sortby_order])[0]
+            this.select_content = sortByContent.replace(re, "");
+        }
+    },
+    beforeDestroy() {
+        this.$eventHub.$off('hide-all-dropdowns');
+    },
+    render: function(h) {
+        return h("div", this.$scopedSlots.default({select_scope: this}));
+    }
+});
+
 Vue.component(`custom-select`, {
     props: {    
         select_selected: {
@@ -160,6 +217,76 @@ Vue.component(`custom-select`, {
         select(new_value) {
             this.select_content = new_value;
         }
+    },
+    created() {
+        this.$eventHub.$on('hide-all-dropdowns', this.hideSelect);
+    },
+    beforeDestroy() {
+        this.$eventHub.$off('hide-all-dropdowns');
+    },
+    render: function(h) {
+        return h("div", this.$scopedSlots.default({select_scope: this}));
+    }
+});
+
+Vue.component(`update-select`, {
+    props: {    
+        select_selected: {
+            type: String,
+            default: ""
+        },
+        id: {
+            type: String
+        },
+        loanable_name: {
+            type: String
+        },
+        loanable_type: {
+            type: String
+        }
+    },
+    data() {
+        return {
+            select_hide: true,
+            select_content: this.select_selected
+        }
+    },
+    methods: {        
+        showSelect() {
+            this.$eventHub.$emit(`hide-all-dropdowns`);
+            this.select_hide = false;
+        },
+        hideSelect() {
+            this.select_hide = true;
+        },
+        toggleSelect() {
+            if (this.select_hide) {
+                this.showSelect();
+            } else {
+                this.hideSelect();
+            }
+        },
+        update(new_value) {            
+            this.$http.get(`/loans/${this.loanable_type}/${this.id}/update/status/${new_value}`)
+            .then(response => response.json())
+            .then(json => {
+                if (json["successful"] === "true") {
+                    this.onUpdated(new_value);
+                } else {
+                    let error = json["error"] ? json["error"] : `The status of "${this.loanable_name}" could not be updated.`;
+                    this.failedUpdated(error);
+                }
+            }, response => {
+                this.failedUpdated(`The status of "${this.loanable_name}" could not be updated.`);
+            });            
+        },
+        onUpdated(new_value) {
+            this.select_content = new_value;
+            this.$emit(`alert-notify`, `The status of "${this.loanable_name}" was successfully changed to ${this.select_content}.`);            
+        },
+        failedUpdated(error) {
+            this.$emit(`alert-error`, error);
+        },
     },
     created() {
         this.$eventHub.$on('hide-all-dropdowns', this.hideSelect);
@@ -241,16 +368,21 @@ Vue.component(`loanable-component`, {
         failedDeleted(error) {
             this.$emit(`alert-error`, error);
         },
-        matchSearch() {
-            return this.loanable_name.toLowerCase().includes(this.keyword.toLowerCase()) ||
-                   this.brand.toLowerCase().includes(this.keyword.toLowerCase());
+        matchSearch(keyword) {
+            return this.loanable_name.toLowerCase().includes(keyword) ||
+                   this.brand.toLowerCase().includes(keyword);
+        },
+        search(keyword) {
+            this.deleted = !this.matchSearch(keyword);
         }
     },
     created() {
         this.$eventHub.$on('hide-all-dropdowns', this.hideAllDropdowns);
+        this.$eventHub.$on('on-search', this.search);
     },    
     beforeDestroy() {
         this.$eventHub.$off('hide-all-dropdowns');
+        this.$eventHub.$on('on-search', this.search);
     },
     render: function(h) {
         let html_tag = this.is_card ? "div" : "tr";
@@ -276,7 +408,8 @@ Vue.component(`loaned-component`, {
     },
     data() {
         return {
-            is_card_shown: false
+            is_card_shown: false,
+            deleted: false
         }
     },
     methods: {
@@ -286,10 +419,19 @@ Vue.component(`loaned-component`, {
         hideCard() {
             this.is_card_shown = false;
         },
-        matchSearch() {
-            return this.loanable_name.toLowerCase().includes(this.keyword.toLowerCase()) ||
-                   this.loaned_by.toLowerCase().includes(this.keyword.toLowerCase());
+        matchSearch(keyword) {
+            return this.loanable_name.toLowerCase().includes(keyword) ||
+                   this.loaned_by.toLowerCase().includes(keyword);
+        },
+        search(keyword) {
+            this.deleted = !this.matchSearch(keyword);
         }
+    },
+    created() {
+        this.$eventHub.$on('on-search', this.search);
+    },    
+    beforeDestroy() {
+        this.$eventHub.$on('on-search', this.search);
     },
     render: function(h) {
         let html_tag = this.is_card ? "div" : "tr";
@@ -380,10 +522,17 @@ Vue.component(`search`, {
             keyword: ""
         }
     },
+    template: "#searchTemplate",
+    /*template: '<input id="search-bar-mobile" type="text" value="" name="search" placeholder="Search for a person or loanable..."></input>',*/
     methods: {
         onChange() {
-            this.$emit(`on-search`, this.keyword.toLowerCase());
+            this.$eventHub.$emit(`on-search`, this.keyword.toLowerCase());
         }
+    },
+    watch:{
+        keyword (val) {
+            this.$eventHub.$emit(`on-search`, val.toLowerCase());
+       }
     }
 });
 
@@ -410,8 +559,8 @@ let app = new Vue({
         onSearch(keyword) {
             this.keyword = keyword;
         },
-        onChange() {
-            this.$emit(`on-search`, this.keyword.toLowerCase());
+        onChange() {        
+            this.$eventHub.$emit(`on-search`, this.keyword.toLowerCase());            
         }
     },
     created() {

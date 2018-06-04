@@ -118,6 +118,10 @@ class LoanApp < Sinatra::Base
         LoansController.action(:delete, self, params).call
     end
 
+    get '/loans/:type/:id/update/:attribute/:value' do
+        LoansController.action(:update, self, params).call
+    end
+
     post '/loans/:type/:id/return' do
         LoansController.action(:return, self, params).call
     end

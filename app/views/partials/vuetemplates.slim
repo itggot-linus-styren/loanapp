@@ -38,4 +38,9 @@ template#alertNotify
     div class="alert-notify" :class="{ active: alert }"
         p ref="text" {{ alert }}
 template#searchTemplate
-    input#search name="search" type="text" placeholder="Search for a person or loanable..." v-model="keyword" @input="onChange"
+    /input#search name="search" type="text" placeholder="Search for a person or loanable..." v-model="keyword" @input="onChange"
+    input#search-bar-mobile[type="text"
+                            value=""
+                            name="search"
+                            placeholder="Search for a person or loanable..."
+                            v-model="keyword"]

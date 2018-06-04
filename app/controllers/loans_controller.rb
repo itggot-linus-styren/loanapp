@@ -68,9 +68,23 @@ class LoansController < Controller
         @ctx.json :successful => 'true'
     end
 
+    def update(params)
+        attribute = params[:attribute]
+        unless @loanable.updateableAttributes.include?(attribute)
+            @ctx.json :successful => 'false', :error => "#{attribute} is not an updateable attribute!"
+        end
+
+        @loanable.updateableAttributes[attribute].call(params[:value])
+        unless @loanable.save
+            @ctx.json :successful => 'false', :error => "Something went wrong when trying to update #{@loanable.name}."
+        end
+
+        @ctx.json :successful => 'true'
+    end
+
     def return(params)
         returnation = params[:return]
-        
+
         @ctx.validate_fields(returnation) || abort_route
 
         responsible = returnation[:responsible]
@@ -109,13 +123,16 @@ end
 class LoansViewController < ViewController
 
     def index(params)
+        orderby_loan = validate_orderby(params, Loan)
+        orderby_loanable = validate_orderby(params, @loanable_type)
+
         if params[:type] && params[:responsible]
-            loans = Loan.with_active_loans(@loanable_type).where("responsible LIKE ?", "%#{params[:responsible]}%").order("loans.responsible ASC")
-        elsif params[:type]
-            loans = Loan.with_active_loans(@loanable_type).order("loans.responsible ASC")
+            loans = loans_sort_by_loanable(Loan.with_active_loans(@loanable_type).where("responsible LIKE ?", "%#{params[:responsible]}%").order(orderby_loan), orderby_loanable)
+        elsif params[:type]            
+            loans = loans_sort_by_loanable(Loan.with_active_loans(@loanable_type).includes(:loanable).order(orderby_loan), orderby_loanable)
         else
             associations = @loanmgr.associations
-            # change from loantypes to loanable_types in slim
+            
             loanable_types = associations.keys.map do |type|
                 name = associations[type].loanable.loanable_name
                 available_count = @loanmgr.loanable_by_type(type).not_deleted.where.not(:id => Loan.with_active_loans(associations[type].loanable).pluck(:loanable_id)).length
@@ -123,11 +140,15 @@ class LoansViewController < ViewController
             end
             return :'loan/loanables', {:loanable_types => loanable_types}
         end
-        return :'loan/loans', {:loans => loans, :type => params[:type]}
+
+        loan_counts = Loan.group(:loanable_id).count
+        return :'loan/loans', {:loans => loans, :loan_counts => loan_counts, :type => params[:type]}
     end
 
     def view(params)
-        loanables = @loanable_type.not_deleted.where.not(:id => Loan.with_active_loans(@loanable_type).pluck(:loanable_id))
+        orderby = validate_orderby(params, @loanable_type)
+
+        loanables = @loanable_type.not_deleted.where.not(:id => Loan.with_active_loans(@loanable_type).pluck(:loanable_id)).order(orderby)
         return :'loan/view', {:loanables => loanables}
     end    
 
@@ -146,4 +167,32 @@ class LoansViewController < ViewController
     def return(params)
         return :'loan/return', {}
     end
+
+    private
+
+    def validate_orderby(params, model)
+        orderby = (params["sortby"] || "").downcase
+        
+        unless orderby.empty?
+            orderby_items = orderby.split(" ")
+            if orderby_items.length > 2 ||
+               !model.column_names.include?(orderby_items[0]) ||
+               !["asc", "desc", nil].include?(orderby_items[1])
+                orderby = ""
+            end
+        end
+
+        orderby
+    end
+
+    def loans_sort_by_loanable(loans, orderby_loanable)
+        return loans if orderby_loanable.empty?
+        orderby_items = orderby_loanable.split(" ")
+        sorted_loans = loans.sort_by {|loan| loan.loanable.send(orderby_items[0])}
+        if orderby_items[1] == "desc"
+            sorted_loans.reverse!
+        end
+        sorted_loans
+    end
+
 end

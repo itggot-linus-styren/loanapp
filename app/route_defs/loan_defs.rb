@@ -5,7 +5,7 @@ RouteFactory.define do
     factory :loan do |params, _|
         if params[:id]
             loan = Loan.find(params[:id])
-            raise RouteDefError, "The loan with ID #{params[:id]}" unless loan
+            raise RouteDefError, "The loan with ID #{params[:id]} doesn't exist." if !loan || !loan.loanable
 
             factory_set({:loan => loan, :type => params[:type]})
         end

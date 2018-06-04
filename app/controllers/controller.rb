@@ -52,8 +52,6 @@ class ViewController < Controller
             vars[key] = instance_variable_get(var)
         end
 
-        puts instance_variables.inspect
-
         @ctx.locals = vars
         @ctx.slim(view_name, {:layout => layout}, locals.merge(vars))
     end

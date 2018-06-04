@@ -4,6 +4,18 @@ form action="/loans/#{type}/#{loan.id}/return" method="post"
     responsible-input @update-responsible="updateResponsible" :responsible_person="responsible" name="return[responsible]"
     - loan.loanable.updateableAttributes.keys.each do |name|
         - old_value = loan.loanable.send(name)
-        div
-            input id="#{name}" name="return[new_#{name}]" type="#{loan.loanable.fields[name].type}" value="#{old_value}" placeholder="New #{name}"
+        - field = loan.loanable.fields[name]
+        - if field.options && field.type == :text
+				div.select-option[is="custom-select"
+					select_selected="#{old_value}"]
+					template slot-scope="{select_scope}"
+                        input id="#{name}" name="return[new_#{name}]" type="hidden" v-model="select_scope.select_content"
+						.custom-select v-click-outside="select_scope.hideSelect" @click="select_scope.toggleSelect"
+							.select-selected v-html="select_scope.select_content"
+							.select-items :class="{ 'select-hide': select_scope.select_hide }"
+								- field.options.each do |value_option|
+									div @click="select_scope.select('#{value_option}')" = value_option
+        - else
+            div
+                input id="#{name}" name="return[new_#{name}]" type="#{loan.loanable.fields[name].type}" value="#{old_value}" placeholder="New #{name}"
     input type="submit" value="Return"

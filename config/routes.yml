@@ -41,6 +41,8 @@ routes:
       delete:
         permissions: [delete]
         wants: [loanable]
+      update:
+        wants: [loanable]
       return:
         wants: [loan]
     views:

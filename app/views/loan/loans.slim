@@ -1,5 +1,5 @@
 - @header = "Loaned #{loanable_type.loanable_name}s"
-- @sortby = loanable_type.fields.values.map {|field| field.description} + ["Responsible", "Loaned since", "Times loaned"]
+- @sortby = loanable_type.fields.keys + ["responsible", "loaned_at"]
 == partial :'partials/sortby'
 - loans.each do |loan|
     div[class="loanable-card"
@@ -8,20 +8,14 @@
         loaned_by="#{loan.responsible}"
         :keyword="keyword"
         is_card=true]
-        template#loanedCard slot-scope="{loanable_scope}" v-if="loanable_scope.matchSearch()"
+        template#loanedCard slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted"
             div class="card"
                 div class="card-content" @click.stop="loanable_scope.showCard"
                     div.left
                         h2 = loan.loanable.name
-                        - value = loan.loanable.staticAttributes["status"].call
-                        div[is="custom-select"
-                            select_selected="#{value[0]}"]
-                            template slot-scope="{select_scope}"
-                                .custom-select v-click-outside="select_scope.hideSelect" @click.stop="select_scope.toggleSelect"
-                                    .select-selected v-html="select_scope.select_content"
-                                    .select-items :class="{ 'select-hide': select_scope.select_hide }"
-                                        - value.each do |value_option|
-                                            div @click="select_scope.select('#{value_option}')" = value_option
+                        - @loanable = loan.loanable
+                        - @value = loan.loanable.staticAttributes["status"].call
+                        == partial :'partials/update_select'
                     div.right
                         a href="##{loan.id}" class="info"
                             i class="fa fa-info-circle"
@@ -40,7 +34,7 @@ div class="hidden"
             location="#{loan.location}"
             purpose="#{loan.purpose}"
             loaned_at="#{loan.loaned_at}"
-            loaned_count="#{loan.loanable.loaned_count}"]
+            loaned_count="#{loan_counts[loan.loanable.id]}"]
 div class="tbl-content"
     table cellpadding="0" cellspacing="0" border="0"
         tbody
@@ -50,22 +44,16 @@ div class="tbl-content"
                     loaned_by="#{loan.responsible}"
                     :keyword="keyword"
                     is_card=false]
-                        template slot-scope="{loanable_scope}" v-if="loanable_scope.matchSearch()"
+                        template slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted"
                             - loan.loanable.staticAttributes.values.zip(loanable_type.fields.values).each do |getter, field|
                                 td
                                     h2 = field.description
-                                    - value = getter.call
-                                    - if value.kind_of?(Array)
-                                        div[is="custom-select"
-                                            select_selected="#{value[0]}"]
-                                            template slot-scope="{select_scope}"
-                                                .custom-select v-click-outside="select_scope.hideSelect" @click="select_scope.toggleSelect"
-                                                    .select-selected v-html="select_scope.select_content"
-                                                    .select-items :class="{ 'select-hide': select_scope.select_hide }"
-                                                        - value.each do |value_option|
-                                                            div @click="select_scope.select('#{value_option}')" = value_option
+                                    - @value = getter.call
+                                    - if @value.kind_of?(Array)
+                                        - @loanable = loan.loanable
+                                        == partial :'partials/update_select'
                                     - else
-                                        p = value
+                                        p = @value
                             td
                                 h2 responsible
                                 a.responsible href="/loans?type=#{type}&responsible=#{loan.responsible}" = loan.responsible

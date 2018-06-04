@@ -3,7 +3,7 @@
     div
         a href="/loans/#{type}/new" class="float"
             i class="fa fa-plus my-float"
-- @sortby = loanable_type.fields.values.map {|field| field.description}
+- @sortby = loanable_type.fields.keys
 == partial :'partials/sortby'
 - loanables.each do |loanable|
     div[class="loanable-card"
@@ -16,20 +16,14 @@
         id="#{loanable.id}"
         loanable_type="#{type}"
         is_card=true]
-        template#loanableCard slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted && loanable_scope.matchSearch()"
+        template#loanableCard slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted"
             div class="card"
                 div class="card-content" @click.stop="loanable_scope.showCard"
                     div.left
                         h2 = loanable.name
-                        - value = loanable.staticAttributes["status"].call
-                        div[is="custom-select"
-                            select_selected="#{value[0]}"]
-                            template slot-scope="{select_scope}"
-                                .custom-select v-click-outside="select_scope.hideSelect" @click.stop="select_scope.toggleSelect"
-                                    .select-selected v-html="select_scope.select_content"
-                                    .select-items :class="{ 'select-hide': select_scope.select_hide }"
-                                        - value.each do |value_option|
-                                            div @click="select_scope.select('#{value_option}')" = value_option
+                        - @loanable = loanable
+                        - @value = loanable.staticAttributes["status"].call
+                        == partial :'partials/update_select'
                     div.right
                         - if ctx.session[:user_id]
                             div.context
@@ -55,22 +49,16 @@ div class="tbl-content"
                     id="#{loanable.id}"
                     loanable_type="#{type}"
                     is_card=false]
-                        template slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted && loanable_scope.matchSearch()"
+                        template slot-scope="{loanable_scope}" v-if="!loanable_scope.deleted"
                             - loanable.staticAttributes.values.zip(loanable_type.fields.values).each do |getter, field|
                                 td
                                     h2 = field.description
-                                    - value = getter.call
-                                    - if value.kind_of?(Array)
-                                        div[is="custom-select"
-                                            select_selected="#{value[0]}"]
-                                            template slot-scope="{select_scope}"
-                                                .custom-select v-click-outside="select_scope.hideSelect" @click="select_scope.toggleSelect"
-                                                    .select-selected v-html="select_scope.select_content"
-                                                    .select-items :class="{ 'select-hide': select_scope.select_hide }"
-                                                        - value.each do |value_option|
-                                                            div @click="select_scope.select('#{value_option}')" = value_option
+                                    - @value = getter.call
+                                    - if @value.kind_of?(Array)
+                                        - @loanable = loanable
+                                        == partial :'partials/update_select'
                                     - else
-                                        p = value
+                                        p = @value
                             - if ctx.session[:user_id]
                                 td.context
                                     div class="dropdown" @click.stop="loanable_scope.showDropdown"

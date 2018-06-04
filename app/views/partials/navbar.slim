@@ -15,7 +15,7 @@ nav
 										@input="onChange"]
 				label for="search-bar-desktop"
 					i.fa.fa-search aria-hidden="true"
-				button.clear-icon @click="keyword = ''"
+				button.clear-icon @click="keyword = ''; onChange()"
 					i.fa.fa-times aria-hidden="true"
 			.sort-by
 				div.sort-by-title

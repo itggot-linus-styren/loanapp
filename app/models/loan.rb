@@ -1,5 +1,6 @@
 class Loan < ActiveRecord::Base
     belongs_to :loanable, :polymorphic => true
+    
     #has_one :loan, :as => :loanable, :foreign_key => "active_loan_id"
 
     before_create :set_date_to_now

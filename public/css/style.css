@@ -221,6 +221,7 @@ main input {
 main input::placeholder {
 	font-size: 1rem;
 	color: #FF8913;
+	opacity: 1;
 }
 
 main input[type=submit] {
@@ -403,6 +404,7 @@ input[type="radio"] {
 	cursor: pointer;
 	user-select: none;
 	font-weight: normal;
+	text-transform: capitalize;
 }
 /*style items (options):*/
 .select-items {
@@ -447,6 +449,28 @@ a.button {
 
 a.button.margin {
 	margin: 0 25%;
+}
+
+.select-option {
+	width: 100%;
+}
+
+.select-option .custom-select {
+	width: 100%;
+}
+
+.select-option .select-selected {
+	padding: 0 16px;
+	height: 56px;
+	display: flex;
+	align-items: center;
+	border-radius: 1000px;
+	margin: 0;
+}
+
+.select-option .select-items {
+	padding: 32px 0px;
+	border-radius: 28px;
 }
 
 /* mobile-first */
@@ -792,6 +816,10 @@ a.button.margin {
 	.sort-by-title img:hover {
 		transform: rotate(180deg);
 	}
+
+	.option {
+		width: 2.5rem;
+	}
 }
 
 /* desktop */
@@ -811,9 +839,9 @@ a.button.margin {
 	main {
 		grid-area: main;
 		display: flex;
-		justify-content: center;
 		align-items: center;
 		flex-direction: column;
+		height: calc(100vh - (128px + 16px));
 	}
 
 	nav {
@@ -841,7 +869,8 @@ a.button.margin {
 		margin-top: 0px;
 		border: 1px solid rgba(0,0,0,0.1);
 		width: 90%;
-		height: calc(100vh - (128px + 16px));
+		height: 100%;
+		flex-grow: 1;
 	}
 
 	td h2 {
@@ -1206,5 +1235,9 @@ a.button.margin {
 	}
 	.select-items div:hover, .same-as-selected {
 		background-color: #f5f5f5;
+	}
+
+	.option {
+		width: 2.75rem;
 	}
 }

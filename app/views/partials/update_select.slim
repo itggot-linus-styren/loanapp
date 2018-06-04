@@ -1,0 +1,13 @@
+div[@alert-notify="doAlertNotify"
+    @alert-error="doAlertError"
+    is="update-select"
+    id="#{@loanable.id}"
+    loanable_type="#{type}"
+    loanable_name="#{@loanable.name}"
+    select_selected="#{@value[0]}"]
+    template slot-scope="{select_scope}"
+        .custom-select v-click-outside="select_scope.hideSelect" @click.stop="select_scope.toggleSelect"
+            .select-selected v-html="select_scope.select_content"
+            .select-items :class="{ 'select-hide': select_scope.select_hide }"
+                - @value.each do |value_option|
+                    div @click="select_scope.update('#{value_option}')" = value_option
