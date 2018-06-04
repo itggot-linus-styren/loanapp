@@ -17,17 +17,19 @@ nav
 					i.fa.fa-search aria-hidden="true"
 				button.clear-icon @click="keyword = ''; onChange()"
 					i.fa.fa-times aria-hidden="true"
-			.sort-by
-				div.sort-by-title
-					h2 Sort by
-					img src="/img/change_sort.svg" alt="change icon"
-				.categories
-					- @sortby.each_with_index do |sortby_option, index|
-						.category
-							.category-checkbox
-								input id="c#{index}" name="" type="checkbox" value="" /
-								label for="c#{index}"
-							label.category-name for="c#{index}"  = sortby_option
+			.sort-by[is="sort-by"
+				select_selected="#{@sortby[0]}"]
+					template slot-scope="{select_scope}"
+						div.sort-by-title
+							h2 Sort by
+							img src="/img/change_sort.svg" alt="change icon" @click="select_scope.reverseOrder"
+						.categories
+							- @sortby.each_with_index do |sortby_option, index|
+								.category @click="select_scope.sortBy('#{sortby_option}')"
+									.category-checkbox
+										input id="c#{index}" name="" type="checkbox" value="" :checked="select_scope.select_content.trim() == '#{sortby_option}'"
+										label for="c#{index}"
+									label.category-name for="c#{index}"  = sortby_option
 		.links
 			a href="/loans" /
 			h2 See all loanables
