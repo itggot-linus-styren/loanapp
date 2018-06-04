@@ -16,7 +16,7 @@ class Car < ActiveRecord::Base
         @staticAttributes = {
             "name" => ->{"#{self.name}"},
             "brand" => ->{"#{self.brand}"},
-            "status" => ->{(["#{self.status}"] + fields()["status"].options).uniq}
+            "status" => ->{(["#{self.status.downcase}"] + fields()["status"].options).uniq}
         }
 
         @updateableAttributes = {"status" => ->(value){self.status = value}}

@@ -24,7 +24,7 @@ class Harddrive < ActiveRecord::Base
     def set_getters_and_setters
         @staticAttributes = {
             "name" => ->{"#{self.name}"},
-            "status" => ->{(["#{self.status}"] + fields()["status"].options).uniq},
+            "status" => ->{(["#{self.status.downcase}"] + fields()["status"].options).uniq},
             "brand" => ->{"#{self.brand}"},
             "disksize" => ->{"#{self.disksize} TB"},
         }
